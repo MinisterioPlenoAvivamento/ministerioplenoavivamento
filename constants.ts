@@ -41,7 +41,8 @@ export const INITIAL_DATA: ChurchData = {
     account: "1012846-3",
     favored: "Wellington Villares dos Santos",
     cnpj: "", // Deixado em branco conforme solicitado
-    pixKey: "338.076.628-39"
+    pixKey: "338.076.628-39",
+    pixCode: "" // Novo campo para o código PIX completo
   },
   history: `
     <p>A Igreja Ministério Pleno Avivamento na Cidade de Bauru-SP nasceu após um tempo precioso com o Senhor. Ele nos direcionou a começar essa obra que a cada dia tem crescido em nossa cidade!</p>

@@ -432,9 +432,17 @@ const AdminDashboard: React.FC = () => {
                 <div className={sectionClass}>
                   <div className="grid grid-cols-1 gap-6">
                     <div>
-                      <label className={labelClass}>Chave PIX (Destaque)</label>
+                      <label className={labelClass}>Chave PIX (CNPJ/Email/Telefone)</label>
                       <input type="text" className={inputClass} value={formData.bank.pixKey || ''} onChange={(e) => updateNested('bank', 'pixKey', e.target.value)} />
+                      <p className="text-[10px] text-gray-500 mt-2">Usada para o botão "Copiar Chave".</p>
                     </div>
+                    
+                    <div>
+                      <label className={labelClass}>Código PIX Completo (BR Code)</label>
+                      <textarea className={`${inputClass} h-32`} value={formData.bank.pixCode || ''} onChange={(e) => updateNested('bank', 'pixCode', e.target.value)} />
+                      <p className="text-[10px] text-church-red mt-2 font-bold">Use o código gerado pelo seu banco (Copia e Cola) para que o QR Code funcione corretamente.</p>
+                    </div>
+                    
                     <div>
                       <label className={labelClass}>CNPJ</label>
                       <input type="text" className={inputClass} value={formData.bank.cnpj || ''} onChange={(e) => updateNested('bank', 'cnpj', e.target.value)} />

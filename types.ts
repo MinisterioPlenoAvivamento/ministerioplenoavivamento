@@ -51,6 +51,7 @@ export interface BankInfo {
   favored: string;
   cnpj: string;
   pixKey: string;
+  pixCode?: string; // Novo campo para o código PIX completo (BR Code)
 }
 
 export interface ContactInfo {

@@ -9,6 +9,9 @@ const Give: React.FC = () => {
     navigator.clipboard.writeText(text);
     alert('Chave PIX copiada com sucesso!');
   };
+  
+  // Determina qual dado usar para o QR Code: o código completo (BR Code) ou a chave PIX.
+  const qrData = data.bank.pixCode || data.bank.pixKey;
 
   return (
     <div className="pt-24 bg-church-black min-h-screen">
@@ -52,11 +55,24 @@ const Give: React.FC = () => {
                     </button>
                </div>
 
-               {/* Mock QR Code */}
+               {/* QR Code Generation - Uses pixCode if available, otherwise pixKey */}
                <div className="w-40 h-40 bg-white p-2 rounded-lg mb-4">
-                  <img src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${data.bank.pixKey}`} alt="QR Code" className="w-full h-full" />
+                  <img 
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrData)}`} 
+                    alt="QR Code PIX" 
+                    className="w-full h-full" 
+                  />
                </div>
                <p className="text-xs text-gray-600">Escaneie com o app do seu banco</p>
+               
+               {data.bank.pixCode && (
+                   <button 
+                      onClick={() => copyToClipboard(data.bank.pixCode!)}
+                      className="mt-4 text-xs text-church-red font-bold uppercase tracking-wider hover:text-red-400 transition-colors flex items-center gap-1"
+                    >
+                      <Copy size={14} /> Copiar Código PIX (Copia e Cola)
+                    </button>
+               )}
             </div>
           </div>
 
