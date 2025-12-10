@@ -3,6 +3,7 @@ import { useChurchData } from '../context/ChurchContext';
 import Button from '../components/Button';
 import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, Image as ImageIcon, CheckCircle, Flame, X, ExternalLink, MessageCircle, AlertTriangle, RotateCcw, Loader2, Radio, GalleryHorizontal, Music } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import ImageUploader from '../components/ImageUploader'; // Importando o novo componente
 
 const AdminDashboard: React.FC = () => {
   const { data, updateData, resetData } = useChurchData();
@@ -249,12 +250,15 @@ const AdminDashboard: React.FC = () => {
                     </h3>
                     <div className="grid grid-cols-1 gap-6">
                        <div>
-                          <label className={labelClass}>Foto da Liderança (Pastor e Esposa)</label>
-                          <input type="text" className={inputClass} placeholder="http://..." value={formData.general.pastorImage || ''} onChange={(e) => updateNested('general', 'pastorImage', e.target.value)} />
-                          <div className="flex justify-between items-center mt-2">
-                             <a href="https://postimages.org/" target="_blank" rel="noopener noreferrer" className="text-church-red text-xs font-bold flex items-center gap-1 bg-church-red/10 px-3 py-1 rounded-full">
-                                Gerar Link de Imagem <ExternalLink size={10} />
-                             </a>
+                          <ImageUploader
+                            onUploadSuccess={(url) => updateNested('general', 'pastorImage', url)}
+                            currentImageUrl={formData.general.pastorImage}
+                            folder="pastor"
+                            label="Upload da Foto da Liderança"
+                          />
+                          <div className="mt-4">
+                            <label className={labelClass}>Link da Imagem (URL)</label>
+                            <input type="text" className={inputClass} placeholder="http://..." value={formData.general.pastorImage || ''} onChange={(e) => updateNested('general', 'pastorImage', e.target.value)} />
                           </div>
                           {formData.general.pastorImage && (
                               <div className="mt-3 w-full h-48 bg-zinc-900 rounded-xl overflow-hidden border border-zinc-700 relative">
@@ -270,9 +274,17 @@ const AdminDashboard: React.FC = () => {
                             <p className="text-[10px] text-gray-500 mt-2">Se preenchido, o vídeo substituirá a imagem do Leão na capa.</p>
                          </div>
                          <div>
-                            <label className={labelClass}>Capa do Site (Imagem de Fundo)</label>
-                            <input type="text" className={inputClass} placeholder="http://..." value={formData.general.heroImage || ''} onChange={(e) => updateNested('general', 'heroImage', e.target.value)} />
-                            <p className="text-[10px] text-gray-500 mt-2">Padrão: Leão (se vídeo estiver vazio).</p>
+                            <ImageUploader
+                              onUploadSuccess={(url) => updateNested('general', 'heroImage', url)}
+                              currentImageUrl={formData.general.heroImage}
+                              folder="hero"
+                              label="Upload da Capa do Site (Imagem de Fundo)"
+                            />
+                            <div className="mt-4">
+                              <label className={labelClass}>Link da Imagem (URL)</label>
+                              <input type="text" className={inputClass} placeholder="http://..." value={formData.general.heroImage || ''} onChange={(e) => updateNested('general', 'heroImage', e.target.value)} />
+                              <p className="text-[10px] text-gray-500 mt-2">Padrão: Leão (se vídeo estiver vazio).</p>
+                            </div>
                          </div>
                        </div>
                        
@@ -484,9 +496,17 @@ const AdminDashboard: React.FC = () => {
                                         <label className={labelClass}>Pregador</label>
                                         <input type="text" className={inputClass} value={sermon.preacher || ''} onChange={(e) => handleUpdateSermon(sermon.id, 'preacher', e.target.value)} />
                                     </div>
-                                    <div>
-                                        <label className={labelClass}>Link da Imagem (Thumbnail)</label>
-                                        <input type="text" className={inputClass} value={sermon.thumbnail || ''} onChange={(e) => handleUpdateSermon(sermon.id, 'thumbnail', e.target.value)} />
+                                    <div className="md:col-span-2">
+                                        <ImageUploader
+                                            onUploadSuccess={(url) => handleUpdateSermon(sermon.id, 'thumbnail', url)}
+                                            currentImageUrl={sermon.thumbnail}
+                                            folder={`sermons/${sermon.id}`}
+                                            label="Upload da Capa do Vídeo (Thumbnail)"
+                                        />
+                                        <div className="mt-4">
+                                            <label className={labelClass}>Link da Imagem (Thumbnail)</label>
+                                            <input type="text" className={inputClass} value={sermon.thumbnail || ''} onChange={(e) => handleUpdateSermon(sermon.id, 'thumbnail', e.target.value)} />
+                                        </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
@@ -545,7 +565,13 @@ const AdminDashboard: React.FC = () => {
                                         <img src={photo.url} alt={photo.alt} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="flex-1 min-w-0 space-y-3">
-                                        <div>
+                                        <ImageUploader
+                                            onUploadSuccess={(url) => handleUpdateGallery(photo.id, 'url', url)}
+                                            currentImageUrl={photo.url}
+                                            folder={`gallery/${photo.id}`}
+                                            label="Upload da Foto"
+                                        />
+                                        <div className="mt-4">
                                             <label className={labelClass}>Link da Imagem (URL)</label>
                                             <input type="text" className={inputClass} value={photo.url || ''} onChange={(e) => handleUpdateGallery(photo.id, 'url', e.target.value)} />
                                         </div>

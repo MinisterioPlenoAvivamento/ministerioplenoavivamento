@@ -12,6 +12,7 @@ import WeeklyService from './pages/WeeklyService';
 import AdminDashboard from './pages/AdminDashboard';
 import { ChurchProvider, useChurchData } from './context/ChurchContext';
 import BackgroundAudioPlayer from './components/BackgroundAudioPlayer'; 
+import ToastProvider from './components/ToastProvider';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -64,6 +65,7 @@ const App: React.FC = () => {
   return (
     <ChurchProvider>
       <Router>
+        <ToastProvider />
         <AppContent />
       </Router>
     </ChurchProvider>
