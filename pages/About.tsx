@@ -102,7 +102,7 @@ const About: React.FC = () => {
                  <h3 className="text-church-red font-bold uppercase tracking-[0.2em] text-sm mb-4 shadow-glow">Liderança</h3>
                  <h2 className="text-4xl md:text-5xl font-black text-white mb-8">{data.general.pastorName}</h2>
                  <p className="text-gray-300 leading-relaxed mb-6 text-lg font-light">
-                   O Ev. Wellington Villares é um homem apaixonado pela Palavra de Deus e pelo mover do Espírito Santo. Com 25 anos servindo a Deus e o ministério, tem dedicado sua vida ao ensino das Escrituras e ao pastoreio de vidas.
+                   O Ev. Wellington Villares é um homem apaixonado pela Palavra de Deus e pelo mover do Espírito Santo. Com 25 anos servindo a Deus e o ministério, tem dedicado sua vida ao ensino das Escrituras e ao pastoreio vidas.
                  </p>
                  <p className="text-gray-300 leading-relaxed mb-8 text-lg font-light">
                    Formado em Teologia e Liderança, seu ministério é marcado por mensagens impactantes, fé ousada e um profundo amor pelas pessoas. Casado com a Jacilene Pereira da Silva, acredita que a família é o primeiro ministério de um cristão.
