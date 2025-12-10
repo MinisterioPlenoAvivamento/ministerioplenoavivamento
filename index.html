@@ -40,6 +40,7 @@
               'float-delayed': 'float 6s ease-in-out 3s infinite',
               'fade-in-up': 'fadeInUp 1s ease-out forwards',
               'pulse-glow': 'pulseGlow 3s infinite',
+              'unfold': 'unfold 1.5s ease-out forwards', // Nova animação
             },
             keyframes: {
               float: {
@@ -53,6 +54,10 @@
               pulseGlow: {
                 '0%, 100%': { opacity: '1', filter: 'brightness(1) drop-shadow(0 0 10px rgba(255,0,0,0.5))' },
                 '50%': { opacity: '0.9', filter: 'brightness(1.3) drop-shadow(0 0 20px rgba(255,0,0,0.8))' },
+              },
+              unfold: { // Animação de desdobramento
+                '0%': { transform: 'scaleY(0)', opacity: '0' },
+                '100%': { transform: 'scaleY(1)', opacity: '1' },
               }
             },
           }
@@ -67,6 +72,12 @@
       }
       .font-display {
         font-family: 'Bebas Neue', sans-serif;
+      }
+      /* Classe para aplicar a animação de desdobramento */
+      .animate-unfold-text {
+        transform-origin: top;
+        animation: unfold 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        opacity: 0;
       }
     </style>
   <script type="importmap">
