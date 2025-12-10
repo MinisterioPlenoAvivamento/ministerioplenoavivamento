@@ -34,12 +34,12 @@ export const INITIAL_DATA: ChurchData = {
     youtube: "https://youtube.com"
   },
   bank: {
-    bank: "Banco do Brasil (001)",
-    agency: "1234-5",
-    account: "99999-X",
-    favored: "Min. Pleno Avivamento",
-    cnpj: "00.000.000/0001-00",
-    pixKey: "00.000.000/0001-00"
+    bank: "Bradesco (13)",
+    agency: "13",
+    account: "1012846-3",
+    favored: "Wellington Villares dos Santos",
+    cnpj: "", // Deixado em branco conforme solicitado
+    pixKey: "338.076.628-39"
   },
   history: `
     <p>A Igreja Ministério Pleno Avivamento na Cidade de Bauru-SP nasceu após um tempo precioso com o Senhor. Ele nos direcionou a começar essa obra que a cada dia tem crescido em nossa cidade!</p>
