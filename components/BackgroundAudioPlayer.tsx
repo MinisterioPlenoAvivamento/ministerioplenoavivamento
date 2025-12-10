@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Volume2, VolumeX, Pause, AlertTriangle } from 'lucide-react';
 
 interface BackgroundAudioPlayerProps {
   audioUrl: string;
@@ -8,15 +9,17 @@ const BackgroundAudioPlayer: React.FC<BackgroundAudioPlayerProps> = ({ audioUrl 
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   // Tenta iniciar a reprodução automaticamente (será bloqueado pelo navegador)
   useEffect(() => {
+    setHasError(false); // Reset error on URL change
     if (audioRef.current) {
       audioRef.current.volume = 0.3; // Volume baixo para música de fundo
       audioRef.current.play().then(() => {
         setIsPlaying(true);
       }).catch(error => {
-        console.log("Autoplay blocked. Waiting for user interaction.", error);
+        console.log("Autoplay blocked or failed:", error);
         setIsPlaying(false);
       });
     }
@@ -25,14 +28,13 @@ const BackgroundAudioPlayer: React.FC<BackgroundAudioPlayerProps> = ({ audioUrl 
   // Listener para tentar tocar após a primeira interação do usuário
   useEffect(() => {
     const handleInteraction = () => {
-      if (!userInteracted && audioRef.current && !isPlaying) {
+      if (!userInteracted && audioRef.current && !isPlaying && !hasError) {
         audioRef.current.play().then(() => {
           setIsPlaying(true);
           setUserInteracted(true);
           document.removeEventListener('click', handleInteraction);
           document.removeEventListener('touchstart', handleInteraction);
         }).catch(e => {
-          // Ainda pode falhar se o áudio não estiver pronto, mas é a melhor tentativa.
           console.log("Failed to play after interaction:", e);
         });
       }
@@ -46,9 +48,8 @@ const BackgroundAudioPlayer: React.FC<BackgroundAudioPlayerProps> = ({ audioUrl 
       document.removeEventListener('click', handleInteraction);
       document.removeEventListener('touchstart', handleInteraction);
     };
-  }, [isPlaying, userInteracted]);
+  }, [isPlaying, userInteracted, hasError]);
 
-  // Botão de controle visível (opcional, mas recomendado)
   const togglePlay = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -57,25 +58,42 @@ const BackgroundAudioPlayer: React.FC<BackgroundAudioPlayerProps> = ({ audioUrl 
       } else {
         audioRef.current.play();
         setIsPlaying(true);
-        setUserInteracted(true); // Marca como interagido
+        setUserInteracted(true);
       }
     }
+  };
+  
+  const handleError = () => {
+    console.error("Audio source error: The element has no supported sources.");
+    setHasError(true);
+    setIsPlaying(false);
   };
 
   return (
     <>
-      <audio ref={audioRef} src={audioUrl} loop preload="auto" />
+      <audio 
+        ref={audioRef} 
+        src={audioUrl} 
+        loop 
+        preload="auto" 
+        onError={handleError} // Adicionado handler de erro
+      />
       
       {/* Botão de controle flutuante no canto inferior direito */}
       <button
         onClick={togglePlay}
-        className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-[100] p-3 rounded-full bg-black/70 backdrop-blur text-white shadow-xl transition-all duration-300 hover:bg-church-red border border-white/10"
-        title={isPlaying ? "Pausar Música" : "Tocar Música"}
+        className={`fixed bottom-4 right-4 md:bottom-8 md:right-8 z-[100] p-3 rounded-full backdrop-blur text-white shadow-xl transition-all duration-300 border border-white/10 
+          ${hasError ? 'bg-red-700 hover:bg-red-800' : 'bg-black/70 hover:bg-church-red'}
+        `}
+        title={hasError ? "Erro no Áudio" : (isPlaying ? "Pausar Música" : "Tocar Música")}
+        disabled={hasError}
       >
-        {isPlaying ? (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pause"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        {hasError ? (
+          <AlertTriangle size={24} />
+        ) : isPlaying ? (
+          <Pause size={24} />
         ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-volume-2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          <Volume2 size={24} />
         )}
       </button>
     </>

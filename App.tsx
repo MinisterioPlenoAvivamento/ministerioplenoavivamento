@@ -37,8 +37,8 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 }
 
 const App: React.FC = () => {
-  // URL fornecida pelo usuário para o áudio de fundo
-  const AUDIO_URL = "https://drive.google.com/uc?export=download&id=1R8_Vp5tKlfpkMuDdfAU8e_aZSDKcX7WK"; 
+  // URL de teste confiável para MP3.
+  const AUDIO_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"; 
 
   return (
     <ChurchProvider>
