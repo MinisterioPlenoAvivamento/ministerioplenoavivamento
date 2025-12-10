@@ -23,7 +23,7 @@ export const INITIAL_DATA: ChurchData = {
   },
   contact: {
     address: "Rua do Avivamento, 777 - Centro",
-    cityState: "Sua Cidade - SC",
+    cityState: "Bauru - SP",
     whatsapp: "(11) 98888-8888",
     email: "contato@avivamentopleno.com.br"
   },
@@ -41,9 +41,9 @@ export const INITIAL_DATA: ChurchData = {
     pixKey: "00.000.000/0001-00"
   },
   history: `
-    <p>O Igreja Ministério Pleno Avivamento nasceu de um sonho de Deus no coração do Pastor Wellington Vilares. Em meio a um tempo de oração e jejum, o Senhor direcionou para o início de uma obra que não seria apenas mais uma denominação, mas um movimento de retorno à essência do Evangelho: o poder de Deus, a santidade e o amor pelas almas.</p>
-    <p>Começamos com um pequeno grupo de oração em uma sala modesta. Ali, vimos o poder de Deus se manifestar de forma sobrenatural. Vidas foram curadas, famílias restauradas e o grupo cresceu rapidamente, tornando-se uma comunidade vibrante e cheia do Espírito Santo.</p>
-    <p>Hoje, somos uma família que cresce a cada dia, mantendo a chama do avivamento acesa, sempre buscando a excelência para servir ao Reino de Deus e impactar nossa cidade.</p>
+    <p>A Igreja Ministério Pleno Avivamento na Cidade de Bauru-SP nasceu após um tempo precioso com o Senhor. Ele nos direcionou a começar essa obra que a cada dia tem crescido em nossa cidade!</p>
+    <p>Começamos em uma garagem com poucas pessoas e hoje estamos crescendo na Graça e no Conhecimento, com muitos sinais onde Deus tem manifestado sua glória entre nós!</p>
+    <p>Buscamos os Dons Espirituais e acreditamos na manifestação do Poder de Deus na vida das pessoas.</p>
   `,
   multimedia: {
     liveUrl: "https://youtube.com",
