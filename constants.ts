@@ -11,7 +11,7 @@ export const NAV_ITEMS: NavItem[] = [
 ];
 
 export const INITIAL_DATA: ChurchData = {
-  version: 60, // Major update for Layout overhaul
+  version: 61, // Incrementing version for new dashboard features (services/events IDs)
   general: {
     churchName: "Ministério Pleno Avivamento",
     pastorName: "Ev. Wellington Villares",
@@ -83,9 +83,9 @@ export const INITIAL_DATA: ChurchData = {
     },
   ],
   services: [
-    { day: 'Sábado', time: '19:30h', name: 'Culto de Avivamento' },
-    { day: 'Domingo', time: '18:00h', name: 'Culto da Família' },
-    { day: 'Quarta', time: '20:00h', name: 'Estudo Bíblico' },
+    { id: 's1', day: 'Sábado', time: '19:30h', name: 'Culto de Avivamento' },
+    { id: 's2', day: 'Domingo', time: '18:00h', name: 'Culto da Família' },
+    { id: 's3', day: 'Quarta', time: '20:00h', name: 'Estudo Bíblico' },
   ],
   events: [
     {

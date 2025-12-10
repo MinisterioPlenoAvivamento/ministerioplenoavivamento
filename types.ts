@@ -16,6 +16,7 @@ export interface Sermon {
 }
 
 export interface Service {
+  id: string; // Added ID for editability
   day: string;
   time: string;
   name: string;

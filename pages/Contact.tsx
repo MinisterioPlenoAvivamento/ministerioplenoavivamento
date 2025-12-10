@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { MapPin, Phone, Mail, Send, MessageSquare } from 'lucide-react';
+import { MapPin, Phone, Mail, Send, MessageSquare, Loader2 } from 'lucide-react';
 import Button from '../components/Button';
 import { useChurchData } from '../context/ChurchContext';
+import { supabase } from '../integrations/supabase/client';
+import { showLoading, showSuccess, showError, dismissToast } from '../utils/toast';
 
 const Contact: React.FC = () => {
   const { data } = useChurchData();
@@ -12,11 +14,47 @@ const Contact: React.FC = () => {
     message: '',
     type: 'pedido_oracao'
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
-    setFormData({ name: '', email: '', phone: '', message: '', type: 'pedido_oracao' });
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    const toastId = showLoading('Enviando sua mensagem...');
+
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            message: formData.message,
+            type: formData.type,
+          },
+        ]);
+
+      if (error) {
+        throw error;
+      }
+
+      dismissToast(toastId);
+      showSuccess('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+      setFormData({ name: '', email: '', phone: '', message: '', type: 'pedido_oracao' }); // Limpa o formulário
+
+    } catch (error: any) {
+      dismissToast(toastId);
+      console.error('Submission Error:', error);
+      showError(`Falha ao enviar: ${error.message || 'Erro desconhecido.'}`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -91,21 +129,23 @@ const Contact: React.FC = () => {
                   <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Nome</label>
                   <input
                     type="text"
+                    name="name"
                     required
                     className="w-full px-4 py-3 rounded-lg bg-black border border-white/10 text-white focus:border-church-red focus:ring-1 focus:ring-church-red outline-none transition-all placeholder-gray-700"
                     placeholder="Seu nome"
                     value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    onChange={handleChange}
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">WhatsApp</label>
                   <input
                     type="tel"
+                    name="phone"
                     className="w-full px-4 py-3 rounded-lg bg-black border border-white/10 text-white focus:border-church-red focus:ring-1 focus:ring-church-red outline-none transition-all placeholder-gray-700"
                     placeholder="(00) 00000-0000"
                     value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -114,20 +154,22 @@ const Contact: React.FC = () => {
                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">E-mail</label>
                 <input
                   type="email"
+                  name="email"
                   required
                   className="w-full px-4 py-3 rounded-lg bg-black border border-white/10 text-white focus:border-church-red focus:ring-1 focus:ring-church-red outline-none transition-all placeholder-gray-700"
                   placeholder="seu@email.com"
                   value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  onChange={handleChange}
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Motivo</label>
                 <select
+                  name="type"
                   className="w-full px-4 py-3 rounded-lg bg-black border border-white/10 text-white focus:border-church-red focus:ring-1 focus:ring-church-red outline-none transition-all appearance-none"
                   value={formData.type}
-                  onChange={(e) => setFormData({...formData, type: e.target.value})}
+                  onChange={handleChange}
                 >
                   <option value="pedido_oracao">Pedido de Oração</option>
                   <option value="testemunho">Testemunho / Graça Alcançada</option>
@@ -140,16 +182,25 @@ const Contact: React.FC = () => {
                 <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Mensagem</label>
                 <textarea
                   rows={4}
+                  name="message"
                   required
                   className="w-full px-4 py-3 rounded-lg bg-black border border-white/10 text-white focus:border-church-red focus:ring-1 focus:ring-church-red outline-none transition-all placeholder-gray-700"
                   placeholder="Escreva aqui..."
                   value={formData.message}
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  onChange={handleChange}
                 ></textarea>
               </div>
 
-              <Button type="submit" fullWidth className="mt-2 bg-gradient-to-r from-church-red to-red-800">
-                Enviar Agora <Send className="ml-2 h-4 w-4" />
+              <Button type="submit" fullWidth className="mt-2 bg-gradient-to-r from-church-red to-red-800" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="ml-2 h-4 w-4 animate-spin" /> Enviando...
+                  </>
+                ) : (
+                  <>
+                    Enviar Agora <Send className="ml-2 h-4 w-4" />
+                  </>
+                )}
               </Button>
             </form>
           </div>

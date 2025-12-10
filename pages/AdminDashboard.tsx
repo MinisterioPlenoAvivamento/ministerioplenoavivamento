@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useChurchData } from '../context/ChurchContext';
 import Button from '../components/Button';
-import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, Image as ImageIcon, CheckCircle, Flame, X, ExternalLink, MessageCircle, AlertTriangle, RotateCcw, Loader2, Radio, GalleryHorizontal, Music, LogOut } from 'lucide-react';
+import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, Image as ImageIcon, CheckCircle, Flame, X, ExternalLink, MessageCircle, AlertTriangle, RotateCcw, Loader2, Radio, GalleryHorizontal, Music, LogOut, Mail } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import ImageUploader from '../components/ImageUploader'; // Importando o novo componente
+import ImageUploader from '../components/ImageUploader';
+import ContactMessagesManager from '../components/ContactMessagesManager'; // Importando o novo componente
 
 const ADMIN_AUTH_KEY = 'admin_authenticated'; // Definindo a chave de autenticação aqui
 
@@ -88,7 +89,7 @@ const AdminDashboard: React.FC = () => {
     }));
   };
 
-  const handleDeleteItem = (section: 'sermons' | 'gallery', id: string) => {
+  const handleDeleteItem = (section: 'sermons' | 'gallery' | 'services' | 'events', id: string) => {
     if (window.confirm('Apagar item?')) {
       setFormData(prev => ({
         ...prev,
@@ -108,6 +109,20 @@ const AdminDashboard: React.FC = () => {
     setFormData(prev => ({
       ...prev,
       gallery: prev.gallery.map((item) => String(item.id) === String(id) ? { ...item, [field]: value } : item)
+    }));
+  };
+  
+  const handleUpdateService = (id: string, field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      services: prev.services.map((item) => String(item.id) === String(id) ? { ...item, [field]: value } : item)
+    }));
+  };
+  
+  const handleUpdateEvent = (id: string, field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      events: prev.events.map((item) => String(item.id) === String(id) ? { ...item, [field]: value } : item)
     }));
   };
 
@@ -134,7 +149,8 @@ const AdminDashboard: React.FC = () => {
             { id: 'history', icon: FileText, label: 'História & Textos' },
             { id: 'financial', icon: DollarSign, label: 'Financeiro' },
             { id: 'sermons', icon: Video, label: 'Mídia & Cultos' },
-            { id: 'gallery', icon: GalleryHorizontal, label: 'Galeria de Fotos' }
+            { id: 'gallery', icon: GalleryHorizontal, label: 'Galeria de Fotos' },
+            { id: 'messages', icon: Mail, label: 'Mensagens de Contato' } // Nova aba
           ].map((item) => (
              <button 
                 key={item.id}
@@ -195,7 +211,8 @@ const AdminDashboard: React.FC = () => {
                 { id: 'history', label: 'História' },
                 { id: 'financial', label: 'Financeiro' },
                 { id: 'sermons', label: 'Mídia' },
-                { id: 'gallery', label: 'Galeria' }
+                { id: 'gallery', label: 'Galeria' },
+                { id: 'messages', label: 'Mensagens' } // Nova aba mobile
               ].map((item) => (
                  <button 
                     key={item.id}
@@ -219,6 +236,7 @@ const AdminDashboard: React.FC = () => {
                 {activeTab === 'financial' && 'Dados Bancários'}
                 {activeTab === 'sermons' && 'Central de Mídia'}
                 {activeTab === 'gallery' && 'Galeria de Fotos'}
+                {activeTab === 'messages' && 'Mensagens de Contato'}
               </h1>
               <div className="flex gap-3">
                  <button onClick={handleReset} className="px-4 py-2 border border-zinc-700 text-gray-400 rounded hover:text-white text-xs font-bold uppercase flex items-center gap-2">
@@ -229,23 +247,25 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Floating Save Button (Mobile & Desktop) - Reposicionado e com Z-Index Máximo */}
-        <button 
-            type="button" 
-            onClick={handleSave}
-            disabled={saveStatus === 'saving'}
-            className={`
-                fixed bottom-24 right-4 md:bottom-8 md:right-8 z-[100] rounded-full w-16 h-16 md:w-20 md:h-20 shadow-2xl flex items-center justify-center transition-all duration-300 border-4 border-black/50 backdrop-blur
-                ${saveStatus === 'idle' ? 'bg-church-red text-white hover:scale-110 shadow-red-900/50 animate-bounce-slow' : ''}
-                ${saveStatus === 'saving' ? 'bg-blue-600 text-white scale-110 cursor-wait ring-4 ring-blue-500/50' : ''}
-                ${saveStatus === 'success' ? 'bg-green-500 text-white scale-110 ring-4 ring-green-500/50' : ''}
-                ${saveStatus === 'error' ? 'bg-red-900 text-white' : ''}
-            `}
-        >
-            {saveStatus === 'idle' && <Save size={32} strokeWidth={2.5} />}
-            {saveStatus === 'saving' && <Loader2 size={32} className="animate-spin" />}
-            {saveStatus === 'success' && <CheckCircle size={36} />}
-            {saveStatus === 'error' && <X size={32} />}
-        </button>
+        {activeTab !== 'messages' && (
+            <button 
+                type="button" 
+                onClick={handleSave}
+                disabled={saveStatus === 'saving'}
+                className={`
+                    fixed bottom-24 right-4 md:bottom-8 md:right-8 z-[100] rounded-full w-16 h-16 md:w-20 md:h-20 shadow-2xl flex items-center justify-center transition-all duration-300 border-4 border-black/50 backdrop-blur
+                    ${saveStatus === 'idle' ? 'bg-church-red text-white hover:scale-110 shadow-red-900/50 animate-bounce-slow' : ''}
+                    ${saveStatus === 'saving' ? 'bg-blue-600 text-white scale-110 cursor-wait ring-4 ring-blue-500/50' : ''}
+                    ${saveStatus === 'success' ? 'bg-green-500 text-white scale-110 ring-4 ring-green-500/50' : ''}
+                    ${saveStatus === 'error' ? 'bg-red-900 text-white' : ''}
+                `}
+            >
+                {saveStatus === 'idle' && <Save size={32} strokeWidth={2.5} />}
+                {saveStatus === 'saving' && <Loader2 size={32} className="animate-spin" />}
+                {saveStatus === 'success' && <CheckCircle size={36} />}
+                {saveStatus === 'error' && <X size={32} />}
+            </button>
+        )}
 
         <div className="p-4 md:p-8 max-w-5xl mx-auto space-y-6">
             
@@ -302,7 +322,7 @@ const AdminDashboard: React.FC = () => {
                             />
                             <div className="mt-4">
                               <label className={labelClass}>Link da Imagem (URL)</label>
-                              <input type="text" className={inputClass} placeholder="http://..." value={formData.general.heroImage || ''} onChange={(e) => updateNested('general', 'heroImage', e.target.value)} />
+                              <input type="text" className={inputClass} value={formData.general.heroImage || ''} onChange={(e) => updateNested('general', 'heroImage', e.target.value)} />
                               <p className="text-[10px] text-gray-500 mt-2">Padrão: Leão (se vídeo estiver vazio).</p>
                             </div>
                          </div>
@@ -479,6 +499,118 @@ const AdminDashboard: React.FC = () => {
                        </div>
                     </div>
                  </div>
+                 
+                 {/* SERVICES LIST (Cultos Semanais) */}
+                 <div className={sectionClass}>
+                    <div className="flex justify-between items-center mb-4">
+                        <h3 className="text-lg font-bold text-white uppercase flex items-center gap-2"><Flame size={18} /> Cultos Semanais</h3>
+                        <Button 
+                            type="button"
+                            variant="white"
+                            className="px-6 py-2 text-xs h-10"
+                            onClick={() => setFormData(prev => ({
+                            ...prev,
+                            services: [...(prev.services || []), { id: Date.now().toString(), day: 'Novo Dia', time: '00:00h', name: 'Novo Culto' }]
+                            }))}
+                        >
+                            <Plus size={16} className="mr-1" /> Adicionar Culto
+                        </Button>
+                    </div>
+                    <div className="space-y-4">
+                        {(formData.services || []).map((service) => (
+                            <div key={service.id} className="bg-zinc-800 border border-zinc-700 p-4 rounded-xl relative">
+                                <div className="grid grid-cols-3 gap-4">
+                                    <div>
+                                        <label className={labelClass}>Dia</label>
+                                        <input type="text" className={inputClass} value={service.day || ''} onChange={(e) => handleUpdateService(service.id, 'day', e.target.value)} />
+                                    </div>
+                                    <div>
+                                        <label className={labelClass}>Horário</label>
+                                        <input type="text" className={inputClass} value={service.time || ''} onChange={(e) => handleUpdateService(service.id, 'time', e.target.value)} />
+                                    </div>
+                                    <div className="col-span-3 md:col-span-1">
+                                        <label className={labelClass}>Nome do Culto</label>
+                                        <input type="text" className={inputClass} value={service.name || ''} onChange={(e) => handleUpdateService(service.id, 'name', e.target.value)} />
+                                    </div>
+                                </div>
+                                <button 
+                                    type="button" 
+                                    onClick={() => handleDeleteItem('services', service.id)} 
+                                    className="absolute -top-2 -right-2 bg-red-600 text-white p-2 rounded-full shadow-lg hover:scale-110 transition-transform z-10"
+                                >
+                                    <Trash2 size={16} />
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                 </div>
+                 
+                 {/* EVENTS LIST */}
+                 <div className={sectionClass}>
+                    <div className="flex justify-between items-center mb-4">
+                        <h3 className="text-lg font-bold text-white uppercase flex items-center gap-2"><Flame size={18} /> Próximos Eventos</h3>
+                        <Button 
+                            type="button"
+                            variant="white"
+                            className="px-6 py-2 text-xs h-10"
+                            onClick={() => setFormData(prev => ({
+                            ...prev,
+                            events: [...(prev.events || []), { id: Date.now().toString(), title: 'Novo Evento', date: 'DD/MM', time: 'HH:MM', image: 'https://picsum.photos/800/500', description: 'Descrição do evento', tag: 'Evento' }]
+                            }))}
+                        >
+                            <Plus size={16} className="mr-1" /> Adicionar Evento
+                        </Button>
+                    </div>
+                    <div className="space-y-4">
+                        {(formData.events || []).map((event) => (
+                            <div key={event.id} className="bg-zinc-800 border border-zinc-700 p-4 rounded-2xl relative">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="md:col-span-2">
+                                        <label className={labelClass}>Título</label>
+                                        <input type="text" className={inputClass} value={event.title || ''} onChange={(e) => handleUpdateEvent(event.id, 'title', e.target.value)} />
+                                    </div>
+                                    <div className="md:col-span-2">
+                                        <label className={labelClass}>Descrição</label>
+                                        <textarea className={`${inputClass} h-20`} value={event.description || ''} onChange={(e) => handleUpdateEvent(event.id, 'description', e.target.value)} />
+                                    </div>
+                                    <div className="grid grid-cols-3 gap-4 col-span-2">
+                                        <div>
+                                            <label className={labelClass}>Data</label>
+                                            <input type="text" className={inputClass} value={event.date || ''} onChange={(e) => handleUpdateEvent(event.id, 'date', e.target.value)} />
+                                        </div>
+                                        <div>
+                                            <label className={labelClass}>Horário</label>
+                                            <input type="text" className={inputClass} value={event.time || ''} onChange={(e) => handleUpdateEvent(event.id, 'time', e.target.value)} />
+                                        </div>
+                                        <div>
+                                            <label className={labelClass}>Tag</label>
+                                            <input type="text" className={inputClass} value={event.tag || ''} onChange={(e) => handleUpdateEvent(event.id, 'tag', e.target.value)} />
+                                        </div>
+                                    </div>
+                                    <div className="md:col-span-2">
+                                        <ImageUploader
+                                            onUploadSuccess={(url) => handleUpdateEvent(event.id, 'image', url)}
+                                            currentImageUrl={event.image}
+                                            folder={`events/${event.id}`}
+                                            label="Upload da Imagem do Evento"
+                                        />
+                                        <div className="mt-4">
+                                            <label className={labelClass}>Link da Imagem (URL)</label>
+                                            <input type="text" className={inputClass} value={event.image || ''} onChange={(e) => handleUpdateEvent(event.id, 'image', e.target.value)} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <button 
+                                    type="button" 
+                                    onClick={() => handleDeleteItem('events', event.id)} 
+                                    className="absolute -top-2 -right-2 bg-red-600 text-white p-2 rounded-full shadow-lg hover:scale-110 transition-transform z-10"
+                                >
+                                    <Trash2 size={16} />
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                 </div>
 
                  {/* SERMONS LIST */}
                  <div>
@@ -613,6 +745,13 @@ const AdminDashboard: React.FC = () => {
                         ))}
                     </div>
                  </div>
+              </div>
+            )}
+            
+            {/* --- MESSAGES TAB --- */}
+            {activeTab === 'messages' && (
+              <div className="space-y-8">
+                <ContactMessagesManager />
               </div>
             )}
         </div>
