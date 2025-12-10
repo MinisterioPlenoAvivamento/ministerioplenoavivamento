@@ -3,6 +3,7 @@ import { useChurchData } from '../context/ChurchContext';
 import { Radio, Mic, Video, Play, ExternalLink, Youtube, Headphones, ArrowRight } from 'lucide-react';
 import Button from '../components/Button';
 import SocialLiveButton from '../components/SocialLiveButton';
+import { Link } from 'react-router-dom'; // Importando Link
 
 const Live: React.FC = () => {
   const { data } = useChurchData();
@@ -170,9 +171,11 @@ const Live: React.FC = () => {
           </div>
           
           <div className="mt-16 text-center">
-             <Button variant="outline">
-                Acessar Arquivo Completo
-             </Button>
+             <a href={data.social.youtube} target="_blank" rel="noopener noreferrer">
+                <Button variant="outline">
+                   Acessar Arquivo Completo
+                </Button>
+             </a>
           </div>
         </section>
 
