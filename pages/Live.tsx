@@ -2,6 +2,7 @@ import React from 'react';
 import { useChurchData } from '../context/ChurchContext';
 import { Radio, Mic, Video, Play, ExternalLink, Youtube, Headphones, ArrowRight } from 'lucide-react';
 import Button from '../components/Button';
+import SocialLiveButton from '../components/SocialLiveButton';
 
 const Live: React.FC = () => {
   const { data } = useChurchData();
@@ -95,14 +96,25 @@ const Live: React.FC = () => {
                     ? 'O céu está descendo! Clique para participar.' 
                     : 'Nossa transmissão está offline no momento. Assista aos cultos anteriores abaixo.'}
                 </p>
-                <a 
-                  href={data.multimedia.liveUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="bg-church-red hover:bg-red-700 text-white px-10 py-4 rounded font-black uppercase tracking-wider text-sm flex items-center gap-3 transition-transform hover:scale-105 shadow-[0_0_30px_rgba(220,38,38,0.4)] hover:shadow-[0_0_40px_rgba(220,38,38,0.6)]"
-                >
-                  <Play fill="currentColor" size={20} /> Acessar YouTube
-                </a>
+                
+                {/* Social Live Buttons */}
+                <div className="flex flex-wrap justify-center gap-4">
+                    <SocialLiveButton 
+                        platform="youtube" 
+                        url={data.multimedia.liveUrl || data.social.youtube} 
+                        isLive={data.multimedia.isLiveNow} 
+                    />
+                    <SocialLiveButton 
+                        platform="facebook" 
+                        url={data.social.facebook} 
+                        isLive={data.multimedia.isLiveNow} 
+                    />
+                    <SocialLiveButton 
+                        platform="instagram" 
+                        url={data.social.instagram} 
+                        isLive={data.multimedia.isLiveNow} 
+                    />
+                </div>
              </div>
              
              {/* Background Image (Cover) */}
