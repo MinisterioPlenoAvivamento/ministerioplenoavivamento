@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useChurchData } from '../context/ChurchContext';
 import Button from '../components/Button';
-import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, Image as ImageIcon, CheckCircle, Flame, X, ExternalLink, MessageCircle, AlertTriangle, RotateCcw, Loader2, Radio, GalleryHorizontal } from 'lucide-react';
+import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, Image as ImageIcon, CheckCircle, Flame, X, ExternalLink, MessageCircle, AlertTriangle, RotateCcw, Loader2, Radio, GalleryHorizontal, Music } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AdminDashboard: React.FC = () => {
@@ -37,7 +37,7 @@ const AdminDashboard: React.FC = () => {
     await new Promise(resolve => setTimeout(resolve, 500));
 
     try {
-        // 3. TENTA SALVAR
+        // 3. Tenta SALVAR
         const success = updateData(formData); // updateData retorna true/false
 
         if (success) {
@@ -232,6 +232,17 @@ const AdminDashboard: React.FC = () => {
             {activeTab === 'general' && (
               <div className="space-y-6 animate-fade-in-up">
                 
+                <div className={sectionClass}>
+                    <h3 className="text-white font-bold mb-6 border-b border-zinc-800 pb-2 flex items-center gap-2">
+                      <Music size={18} className="text-church-red" /> Áudio de Fundo
+                    </h3>
+                    <div>
+                        <label className={labelClass}>Link Direto do Áudio (MP3)</label>
+                        <input type="text" className={inputClass} placeholder="https://..." value={formData.general.backgroundAudioUrl || ''} onChange={(e) => updateNested('general', 'backgroundAudioUrl', e.target.value)} />
+                        <p className="text-[10px] text-gray-500 mt-2">Use um link direto para um arquivo MP3. O player aparecerá no canto inferior direito.</p>
+                    </div>
+                </div>
+
                 <div className={sectionClass}>
                     <h3 className="text-white font-bold mb-6 border-b border-zinc-800 pb-2 flex items-center gap-2">
                       <ImageIcon size={18} className="text-church-red" /> Imagens & Vídeo

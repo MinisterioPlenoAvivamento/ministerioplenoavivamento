@@ -74,6 +74,7 @@ export interface ChurchData {
     pastorImage?: string; // Optional custom image for Pastor
     heroImage?: string; // Fallback image (The Lion)
     heroVideo?: string; // Background Video URL
+    backgroundAudioUrl?: string; // New field for background music URL
     welcomeMessage: string;
     verse: string;
     verseReference: string;
