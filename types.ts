@@ -14,6 +14,22 @@ export interface Sermon {
   duration: string;
 }
 
+export interface Service {
+  day: string;
+  time: string;
+  name: string;
+}
+
+export interface Event {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  image: string;
+  description: string;
+  tag?: string;
+}
+
 export interface MultimediaConfig {
   liveUrl: string;
   isLiveNow: boolean;
@@ -61,5 +77,7 @@ export interface ChurchData {
   bank: BankInfo;
   history: string; // HTML or Markdown string
   sermons: Sermon[];
+  services: Service[]; // New field
+  events: Event[]; // New field
   multimedia: MultimediaConfig;
 }

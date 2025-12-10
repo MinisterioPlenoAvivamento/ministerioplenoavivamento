@@ -3,6 +3,7 @@ import { ChurchData, NavItem } from './types';
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Início', path: '/' },
   { label: 'Sobre Nós', path: '/sobre' },
+  { label: 'Culto Semanal', path: '/cultosemanal' }, // New item
   { label: 'Ao Vivo', path: '/aovivo' },
   { label: 'Mensagens', path: '/mensagens' },
   { label: 'Contribuir', path: '/contribuir' },
@@ -76,5 +77,21 @@ export const INITIAL_DATA: ChurchData = {
       thumbnail: 'https://picsum.photos/id/233/600/400',
       duration: '38:45',
     },
+  ],
+  services: [
+    { day: 'Sábado', time: '19:30h', name: 'Culto de Avivamento' },
+    { day: 'Domingo', time: '18:00h', name: 'Culto da Família' },
+    { day: 'Quarta', time: '20:00h', name: 'Estudo Bíblico' },
+  ],
+  events: [
+    {
+      id: 'e1',
+      title: 'Conferência de Fogo',
+      date: '25 de Novembro',
+      time: '19:00h',
+      image: 'https://picsum.photos/id/300/800/500',
+      description: 'Três dias de imersão na presença de Deus com preletores convidados.',
+      tag: 'Conferência'
+    }
   ]
 };

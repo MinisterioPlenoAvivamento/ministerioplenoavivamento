@@ -8,6 +8,7 @@ import Media from './pages/Media';
 import Give from './pages/Give';
 import Contact from './pages/Contact';
 import Live from './pages/Live';
+import WeeklyService from './pages/WeeklyService'; // New Import
 import AdminDashboard from './pages/AdminDashboard';
 import { ChurchProvider } from './context/ChurchContext';
 
@@ -43,6 +44,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/sobre" element={<About />} />
+            <Route path="/cultosemanal" element={<WeeklyService />} /> {/* New Route */}
             <Route path="/aovivo" element={<Live />} />
             <Route path="/mensagens" element={<Media />} />
             <Route path="/contribuir" element={<Give />} />

@@ -3,7 +3,7 @@ import { useChurchData } from '../context/ChurchContext';
 import { Calendar as CalendarIcon, Clock, MapPin, Download } from 'lucide-react';
 import Button from '../components/Button';
 
-const Events: React.FC = () => {
+const Schedule: React.FC = () => {
   const { data } = useChurchData();
 
   return (
@@ -134,4 +134,4 @@ const Events: React.FC = () => {
   );
 };
 
-export default Events;
+export default Schedule;
