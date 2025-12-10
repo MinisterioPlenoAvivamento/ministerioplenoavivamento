@@ -43,7 +43,8 @@ const Give: React.FC = () => {
                <p className="text-gray-500 text-sm mb-8">Rápido, seguro e cai na hora.</p>
                
                <div className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-8 relative group">
-                  <p className="text-[10px] uppercase text-gray-500 font-bold mb-2 tracking-widest">Chave PIX (CNPJ/Email)</p>
+                  {/* Rótulo atualizado para CPF */}
+                  <p className="text-[10px] uppercase text-gray-500 font-bold mb-2 tracking-widest">Chave PIX (CPF)</p>
                   <div className="flex items-center justify-center gap-3">
                     <span className="text-xl md:text-2xl font-mono text-white font-bold tracking-tight">{data.bank.pixKey}</span>
                   </div>
