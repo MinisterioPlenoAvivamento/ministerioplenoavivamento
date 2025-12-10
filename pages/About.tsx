@@ -107,9 +107,7 @@ const About: React.FC = () => {
                  <p className="text-gray-300 leading-relaxed mb-8 text-lg font-light">
                    Formado em Teologia e Liderança, seu ministério é marcado por mensagens impactantes, fé ousada e um profundo amor pelas pessoas. Casado com a Jacilene Pereira da Silva, acredita que a família é o primeiro ministério de um cristão.
                  </p>
-                 <div className="mt-4 pt-8 border-t border-white/10">
-                   <img src="https://picsum.photos/200/80" alt="Assinatura" className="h-12 opacity-50 invert" />
-                 </div>
+                 {/* REMOVIDO: Assinatura placeholder */}
                </div>
              </div>
            </div>
