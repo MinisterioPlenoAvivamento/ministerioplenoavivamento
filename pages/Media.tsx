@@ -41,7 +41,7 @@ const Media: React.FC = () => {
               onClick={() => handleVideoClick(latestSermon.videoUrl)}
             >
               <img 
-                src="https://picsum.photos/id/1025/1200/675" 
+                src={latestSermon.thumbnail} 
                 alt="Latest Sermon" 
                 className="w-full h-full object-cover opacity-70 group-hover:opacity-50 transition-opacity duration-500"
               />
