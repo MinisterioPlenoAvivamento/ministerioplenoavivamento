@@ -42,7 +42,7 @@ export const INITIAL_DATA: ChurchData = {
     favored: "Wellington Villares dos Santos",
     cnpj: "", // Deixado em branco conforme solicitado
     pixKey: "338.076.628-39", // Chave PIX (CPF) para exibição
-    pixCode: "wellvillsants@gmail.com" // Código PIX (E-mail) para QR Code
+    pixCode: "00020126450014BR.GOV.BCB.PIX0123wellvillsants@gmail.com5204000053039865802BR5901N6001C62070503***6304C5F3" // Código PIX Completo (BR Code)
   },
   history: `
     <p>A Igreja Ministério Pleno Avivamento na Cidade de Bauru-SP nasceu após um tempo precioso com o Senhor. Ele nos direcionou a começar essa obra que a cada dia tem crescido em nossa cidade!</p>
