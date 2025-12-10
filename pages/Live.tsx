@@ -32,7 +32,7 @@ const Live: React.FC = () => {
             <span className="w-2 h-2 bg-church-red rounded-full animate-pulse"></span>
             <span className="text-church-red text-xs font-black tracking-[0.2em] uppercase">Central de Transmissão</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-4">Ao Vivo & Podcasts</h1>
+          <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-4">Ao Vivo & Arquivo</h1>
           <p className="text-gray-400 text-lg">Conecte-se com o céu onde quer que você esteja.</p>
         </div>
       </div>
@@ -46,12 +46,6 @@ const Live: React.FC = () => {
                 className="px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wide text-gray-400 hover:text-white hover:bg-white/5 transition-all flex items-center gap-2"
              >
                 <Radio size={16} /> <span className="hidden md:inline">Transmissão</span> Ao Vivo
-             </button>
-             <button 
-                onClick={() => scrollToSection('podcast')} 
-                className="px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wide text-gray-400 hover:text-white hover:bg-white/5 transition-all flex items-center gap-2"
-             >
-                <Headphones size={16} /> Podcast
              </button>
              <button 
                 onClick={() => scrollToSection('archive')} 
@@ -118,51 +112,6 @@ const Live: React.FC = () => {
                className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 group-hover:scale-105 transition-transform duration-[2s]"
              />
           </div>
-        </section>
-
-        {/* PODCAST SECTION */}
-        <section id="podcast" className="mb-24 scroll-mt-48">
-           <div className="flex justify-between items-end mb-10 border-b border-white/5 pb-6">
-              <div className="flex items-center gap-4">
-                <div className="w-1 h-8 bg-yellow-600 rounded-full"></div>
-                <div>
-                    <h2 className="text-3xl font-bold text-white">Avivamento Cast</h2>
-                    <p className="text-gray-500 text-sm mt-1">Áudio e edificação para o seu dia.</p>
-                </div>
-              </div>
-              <a href={data.multimedia.podcastUrl} target="_blank" rel="noreferrer" className="hidden md:flex text-gray-400 font-bold hover:text-white flex items-center gap-2 text-xs uppercase tracking-wider transition-colors">
-                Spotify Oficial <ExternalLink size={14} />
-              </a>
-           </div>
-
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {data.multimedia.latestPodcasts.map((podcast) => (
-                <div key={podcast.id} className="bg-church-dark rounded-xl border border-white/5 p-4 flex gap-4 hover:border-white/20 transition-all hover:bg-zinc-800 group">
-                   <div className="relative w-24 h-24 flex-shrink-0">
-                      <img src={podcast.image} alt={podcast.title} className="w-full h-full rounded-lg object-cover shadow-lg" />
-                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg">
-                         <Play size={16} className="text-white fill-white" />
-                      </div>
-                   </div>
-                   <div className="flex flex-col justify-center flex-1 min-w-0">
-                      <span className="text-[10px] font-bold text-yellow-600 uppercase tracking-wide mb-1 flex items-center gap-1">
-                        <Headphones size={10} /> Novo Episódio
-                      </span>
-                      <h3 className="font-bold text-white text-base leading-tight mb-2 truncate group-hover:text-yellow-500 transition-colors">{podcast.title}</h3>
-                      <p className="text-xs text-gray-500 line-clamp-1 mb-3">{podcast.description}</p>
-                      
-                      <a 
-                        href={podcast.spotifyUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-xs font-bold text-gray-400 hover:text-white uppercase tracking-wider flex items-center gap-1"
-                      >
-                        Ouvir Agora <ArrowRight size={10} />
-                      </a>
-                   </div>
-                </div>
-              ))}
-           </div>
         </section>
 
         {/* RECENT LIVES ARCHIVE */}

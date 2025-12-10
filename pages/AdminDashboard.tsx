@@ -87,33 +87,10 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
-  const handleDeletePodcast = (e: React.MouseEvent, id: string) => {
-    e.stopPropagation();
-    if (window.confirm('Apagar episódio de podcast?')) {
-      setFormData(prev => ({
-        ...prev,
-        multimedia: {
-          ...prev.multimedia,
-          latestPodcasts: (prev.multimedia.latestPodcasts || []).filter(item => String(item.id) !== String(id))
-        }
-      }));
-    }
-  };
-
   const handleUpdateSermon = (id: string, field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       sermons: prev.sermons.map((item) => String(item.id) === String(id) ? { ...item, [field]: value } : item)
-    }));
-  };
-
-  const handleUpdatePodcast = (id: string, field: string, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      multimedia: {
-        ...prev.multimedia,
-        latestPodcasts: (prev.multimedia.latestPodcasts || []).map((item) => String(item.id) === String(id) ? { ...item, [field]: value } : item)
-      }
     }));
   };
 
@@ -506,70 +483,6 @@ const AdminDashboard: React.FC = () => {
                                 <button 
                                     type="button" 
                                     onClick={(e) => handleDeleteSermon(e, sermon.id)} 
-                                    className="absolute -top-2 -right-2 bg-red-600 text-white p-2 rounded-full shadow-lg hover:scale-110 transition-transform z-10"
-                                >
-                                    <Trash2 size={20} />
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                 </div>
-
-                 {/* PODCASTS LIST */}
-                 <div className="pt-8 border-t border-zinc-800">
-                    <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-lg font-bold text-white uppercase flex items-center gap-2"><Headphones size={18} /> Podcasts</h3>
-                        <Button 
-                            type="button"
-                            variant="white"
-                            className="px-6 py-2 text-xs h-10"
-                            onClick={() => setFormData(prev => ({
-                            ...prev,
-                            multimedia: {
-                                ...prev.multimedia,
-                                latestPodcasts: [...(prev.multimedia.latestPodcasts || []), { id: Date.now().toString(), title: 'Novo Episódio', description: 'Descrição breve...', date: 'Hoje', image: 'https://picsum.photos/400/400', spotifyUrl: '#' }]
-                            }
-                            }))}
-                        >
-                            <Plus size={16} className="mr-1" /> Adicionar
-                        </Button>
-                    </div>
-
-                    <div className="space-y-6">
-                        {(formData.multimedia?.latestPodcasts || []).map((podcast) => (
-                            <div key={podcast.id} className="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl flex flex-col gap-4 shadow-lg relative">
-                                <div className="flex items-start gap-4">
-                                    <div className="w-20 h-20 bg-black rounded-lg overflow-hidden border border-zinc-700 flex-shrink-0">
-                                        <img src={podcast.image} className="w-full h-full object-cover" />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <label className={labelClass}>Título do Episódio</label>
-                                        <input type="text" className={inputClass} value={podcast.title || ''} onChange={(e) => handleUpdatePodcast(podcast.id, 'title', e.target.value)} />
-                                    </div>
-                                </div>
-                                
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className={labelClass}>Descrição Curta</label>
-                                        <input type="text" className={inputClass} value={podcast.description || ''} onChange={(e) => handleUpdatePodcast(podcast.id, 'description', e.target.value)} />
-                                    </div>
-                                    <div>
-                                        <label className={labelClass}>Link da Capa (Imagem)</label>
-                                        <input type="text" className={inputClass} value={podcast.image || ''} onChange={(e) => handleUpdatePodcast(podcast.id, 'image', e.target.value)} />
-                                    </div>
-                                    <div>
-                                        <label className={labelClass}>Link Spotify</label>
-                                        <input type="text" className={inputClass} value={podcast.spotifyUrl || ''} onChange={(e) => handleUpdatePodcast(podcast.id, 'spotifyUrl', e.target.value)} />
-                                    </div>
-                                    <div>
-                                        <label className={labelClass}>Data</label>
-                                        <input type="text" className={inputClass} value={podcast.date || ''} onChange={(e) => handleUpdatePodcast(podcast.id, 'date', e.target.value)} />
-                                    </div>
-                                </div>
-
-                                <button 
-                                    type="button" 
-                                    onClick={(e) => handleDeletePodcast(e, podcast.id)} 
                                     className="absolute -top-2 -right-2 bg-red-600 text-white p-2 rounded-full shadow-lg hover:scale-110 transition-transform z-10"
                                 >
                                     <Trash2 size={20} />

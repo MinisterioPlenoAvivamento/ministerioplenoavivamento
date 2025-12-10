@@ -50,25 +50,6 @@ export const INITIAL_DATA: ChurchData = {
     liveUrl: "https://youtube.com",
     isLiveNow: true,
     liveTitle: "Culto de Sábado - Ao Vivo",
-    podcastUrl: "https://spotify.com",
-    latestPodcasts: [
-      {
-        id: '1',
-        title: 'Caminhando em Santidade #12',
-        description: 'Um bate-papo profundo sobre como manter a santidade nos dias atuais.',
-        date: '12 Out 2023',
-        image: 'https://picsum.photos/id/1/400/400',
-        spotifyUrl: '#'
-      },
-      {
-        id: '2',
-        title: 'O Poder da Oração #11',
-        description: 'Testemunhos impactantes sobre o poder da intercessão.',
-        date: '05 Out 2023',
-        image: 'https://picsum.photos/id/2/400/400',
-        spotifyUrl: '#'
-      }
-    ]
   },
   sermons: [
     {

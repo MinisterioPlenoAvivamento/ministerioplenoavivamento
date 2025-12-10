@@ -14,21 +14,10 @@ export interface Sermon {
   duration: string;
 }
 
-export interface PodcastEpisode {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  spotifyUrl: string;
-  date: string;
-}
-
 export interface MultimediaConfig {
   liveUrl: string;
   isLiveNow: boolean;
   liveTitle: string;
-  podcastUrl: string; // Main channel link (Spotify/Apple)
-  latestPodcasts: PodcastEpisode[];
 }
 
 export interface BankInfo {

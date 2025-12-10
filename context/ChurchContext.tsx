@@ -48,7 +48,6 @@ export const ChurchProvider: React.FC<React.PropsWithChildren> = ({ children }) 
           multimedia: { 
             ...INITIAL_DATA.multimedia, 
             ...(parsed.multimedia || {}),
-            latestPodcasts: sanitizeList(parsed.multimedia?.latestPodcasts || INITIAL_DATA.multimedia.latestPodcasts)
           },
           sermons: sanitizeList(parsed.sermons || INITIAL_DATA.sermons),
         };
