@@ -67,7 +67,7 @@ const Live: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         
         {/* LIVE STREAM SECTION */}
-        <section id="live" className="mb-24 scroll-mt-48">
+        <section id="live" className="mb-12 scroll-mt-48">
           <div className="flex items-center gap-4 mb-8">
              <div className="w-1 h-8 bg-church-red rounded-full"></div>
              <div>
@@ -76,7 +76,8 @@ const Live: React.FC = () => {
              </div>
           </div>
 
-          <div className="bg-black rounded-2xl overflow-hidden shadow-2xl relative aspect-video border border-white/10 group">
+          {/* Main Live Block (Video/Image) */}
+          <div className="bg-black rounded-2xl overflow-hidden shadow-2xl relative aspect-video border border-white/10 group mb-8">
              {data.multimedia.isLiveNow ? (
                <div className="absolute top-6 right-6 z-20">
                   <span className="flex items-center gap-2 bg-church-red text-white px-4 py-2 rounded font-bold uppercase tracking-widest text-xs animate-pulse shadow-[0_0_20px_rgba(220,38,38,0.6)]">
@@ -97,30 +98,11 @@ const Live: React.FC = () => {
                 <h3 className="text-3xl md:text-5xl font-black text-white mb-4 text-center px-4 tracking-tight drop-shadow-md">
                   {data.multimedia.liveTitle || 'Nossa Transmissão'}
                 </h3>
-                <p className="text-gray-300 mb-10 max-w-lg text-center px-4 font-light text-lg">
+                <p className="text-gray-300 max-w-lg text-center px-4 font-light text-lg">
                   {data.multimedia.isLiveNow 
                     ? 'O céu está descendo! Clique para participar.' 
                     : 'Nossa transmissão está offline no momento. Assista aos cultos anteriores abaixo.'}
                 </p>
-                
-                {/* Social Live Buttons - ADJUSTED FOR MOBILE: Stacked vertically */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-sm px-4">
-                    <SocialLiveButton 
-                        platform="youtube" 
-                        url={data.multimedia.liveUrl || data.social.youtube} 
-                        isLive={data.multimedia.isLiveNow} 
-                    />
-                    <SocialLiveButton 
-                        platform="facebook" 
-                        url={data.social.facebook} 
-                        isLive={data.multimedia.isLiveNow} 
-                    />
-                    <SocialLiveButton 
-                        platform="instagram" 
-                        url={data.social.instagram} 
-                        isLive={data.multimedia.isLiveNow} 
-                    />
-                </div>
              </div>
              
              {/* Background Image (Cover) */}
@@ -129,6 +111,25 @@ const Live: React.FC = () => {
                alt="Background" 
                className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 group-hover:scale-105 transition-transform duration-[2s]"
              />
+          </div>
+          
+          {/* Social Live Buttons - MOVED OUTSIDE THE ASPECT-VIDEO CONTAINER */}
+          <div className="flex flex-col sm:flex-row md:grid md:grid-cols-3 gap-4 w-full max-w-3xl mx-auto px-4 sm:px-0">
+              <SocialLiveButton 
+                  platform="youtube" 
+                  url={data.multimedia.liveUrl || data.social.youtube} 
+                  isLive={data.multimedia.isLiveNow} 
+              />
+              <SocialLiveButton 
+                  platform="facebook" 
+                  url={data.social.facebook} 
+                  isLive={data.multimedia.isLiveNow} 
+              />
+              <SocialLiveButton 
+                  platform="instagram" 
+                  url={data.social.instagram} 
+                  isLive={data.multimedia.isLiveNow} 
+              />
           </div>
         </section>
 
