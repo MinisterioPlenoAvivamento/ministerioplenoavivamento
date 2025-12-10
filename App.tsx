@@ -37,9 +37,8 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 }
 
 const App: React.FC = () => {
-  // Tentativa de usar o ID do arquivo do Google Drive no formato de download direto.
-  // ID: 1R8_Vp5tKlfpkMuDdfAU8e_aZSDKcX7WK
-  const AUDIO_URL = "https://drive.google.com/uc?export=download&id=1R8_Vp5tKlfpkMuDdfAU8e_aZSDKcX7WK"; 
+  // URL de teste confiável para MP3.
+  const AUDIO_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"; 
 
   return (
     <ChurchProvider>
