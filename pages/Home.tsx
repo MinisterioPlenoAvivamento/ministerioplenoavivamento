@@ -142,9 +142,10 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
              
-             {/* Card 1 */}
+             {/* Card 1: AO VIVO */}
              <Link to="/aovivo" className="group relative h-80 overflow-hidden rounded-3xl border border-white/5 bg-zinc-900 shadow-xl transition-all duration-500 hover:scale-[1.02]">
-               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
+               {/* Usando uma imagem mais genérica e confiável para o Live */}
+               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                <div className="absolute inset-0 p-8 flex flex-col justify-end z-10">
                  <Video className="text-church-red mb-4 h-10 w-10 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]" />
@@ -155,9 +156,10 @@ const Home: React.FC = () => {
                </div>
              </Link>
 
-             {/* Card 2 */}
+             {/* Card 2: CONTRIBUIR */}
              <Link to="/contribuir" className="group relative h-80 overflow-hidden rounded-3xl border border-white/5 bg-zinc-900 shadow-xl transition-all duration-500 hover:scale-[1.02]">
-               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1627906950346-b25867a5b325?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+               {/* Usando uma imagem mais genérica e confiável para Contribuir */}
+               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556742111-a301076d9d18?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                <div className="absolute inset-0 p-8 flex flex-col justify-end z-10">
                  <Heart className="text-yellow-500 mb-4 h-10 w-10 drop-shadow-[0_0_10px_rgba(234,179,8,0.6)]" />
@@ -168,7 +170,7 @@ const Home: React.FC = () => {
                </div>
              </Link>
 
-             {/* Card 3 */}
+             {/* Card 3: VISITE-NOS */}
              <Link to="/contato" className="group relative h-80 overflow-hidden rounded-3xl border border-white/5 bg-zinc-900 shadow-xl transition-all duration-500 hover:scale-[1.02]">
                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1548345680-f5475ea5df84?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
