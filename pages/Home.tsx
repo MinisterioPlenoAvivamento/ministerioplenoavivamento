@@ -85,7 +85,7 @@ const Home: React.FC = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
           <ChevronDown className="text-white h-8 w-8 opacity-50" />
         </div>
       </section>
