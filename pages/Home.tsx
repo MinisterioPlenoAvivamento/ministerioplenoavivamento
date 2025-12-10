@@ -64,13 +64,13 @@ const Home: React.FC = () => {
             
             <div className="w-24 h-1 bg-church-red mt-8 mb-8 rounded-full shadow-[0_0_15px_rgba(255,0,0,0.8)] animate-pulse"></div>
 
-            <p className="max-w-2xl mx-auto text-lg md:text-2xl text-gray-200 font-sans font-light leading-relaxed animate-fade-in-up drop-shadow-md" style={{animationDelay: '0.6s'}}>
+            <p className="max-w-2xl mx-auto text-lg md:text-2xl text-gray-200 font-sans font-light leading-relaxed animate-fade-in-up drop-shadow-md" style={{animationDelay: '0.8s'}}>
               {data.general.welcomeMessage}
             </p>
           </div>
 
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center pt-8 animate-fade-in-up" style={{animationDelay: '0.8s'}}>
+          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center pt-8 animate-fade-in-up" style={{animationDelay: '1s'}}>
             <Link to="/aovivo" className="w-full sm:w-auto group">
                <button className="w-full sm:min-w-[240px] px-8 py-4 bg-church-red text-white font-display text-xl tracking-wide rounded-full shadow-[0_0_30px_rgba(255,0,0,0.5)] transition-all duration-300 transform group-hover:scale-105 group-hover:bg-red-600 group-hover:shadow-[0_0_50px_rgba(255,0,0,0.8)] flex items-center justify-center gap-2">
                   <Play className="fill-white w-5 h-5" /> ASSISTIR ONLINE
@@ -94,7 +94,7 @@ const Home: React.FC = () => {
       <section className="bg-church-dark py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-church-red/20 via-church-black to-church-black"></div>
         <div className="max-w-6xl mx-auto px-4 text-center relative z-10">
-          <p className="text-3xl md:text-5xl font-serif text-white font-medium leading-tight drop-shadow-lg">
+          <p className="text-3xl md:text-5xl font-serif text-white font-medium leading-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
             "{data.general.verse}"
           </p>
           <div className="mt-10 inline-block border-t border-church-red/50 pt-4">
@@ -117,9 +117,7 @@ const Home: React.FC = () => {
                     />
                 </div>
                 <div className="p-12 lg:p-24 flex flex-col justify-center relative z-20">
-                   <h3 className="text-church-red font-bold tracking-[0.3em] uppercase text-xs mb-6 flex items-center gap-3">
-                      <span className="w-12 h-0.5 bg-church-red"></span> LIDERANÇA
-                   </h3>
+                   <h3 className="text-church-red font-bold tracking-[0.3em] uppercase text-xs mb-6 shadow-glow">LIDERANÇA</h3>
                    <h2 className="text-5xl md:text-6xl font-display text-white mb-8 leading-none">
                       UMA PALAVRA PARA <br/> O SEU CORAÇÃO
                    </h2>
