@@ -5,6 +5,7 @@ import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, I
 import { Link, useNavigate } from 'react-router-dom';
 import ImageUploader from '../components/ImageUploader';
 import ContactMessagesManager from '../components/ContactMessagesManager'; // Importando o novo componente
+import { showSuccess } from '../utils/toast'; // Importando showSuccess
 
 const ADMIN_AUTH_KEY = 'admin_authenticated'; // Definindo a chave de autenticação aqui
 
@@ -95,6 +96,8 @@ const AdminDashboard: React.FC = () => {
         ...prev,
         [section]: (prev[section] || []).filter(item => String(item.id) !== String(id))
       }));
+      showSuccess('Item removido localmente. Clique em SALVAR para confirmar.');
+      setSaveStatus('idle'); // Garante que o botão de salvar fique visível
     }
   };
 
