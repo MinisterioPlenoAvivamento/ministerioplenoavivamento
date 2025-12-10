@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="https://lucide.dev/icons/flame.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Igreja Ministério Pleno Avivamento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;700;900&family=Cinzel:wght@400;600;800&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Outfit', 'sans-serif'],
+              serif: ['Cinzel', 'serif'],
+              display: ['Bebas Neue', 'sans-serif'], // Fonte Alta e Impactante
+            },
+            colors: {
+              church: {
+                black: '#050505', // Preto Absoluto
+                dark: '#0a0a0a', // Preto Profundo
+                gray: '#27272a',
+                red: '#ff0000', // Vermelho LED Puro
+                redDark: '#8a0000',
+                text: '#ffffff',
+                gold: '#d4af37',
+              }
+            },
+            boxShadow: {
+              'glow': '0 0 20px -5px rgba(255, 0, 0, 0.6)',
+              'glow-lg': '0 0 50px -10px rgba(255, 0, 0, 0.9)',
+              'glow-gold': '0 0 30px -5px rgba(212, 175, 55, 0.4)',
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'float-delayed': 'float 6s ease-in-out 3s infinite',
+              'fade-in-up': 'fadeInUp 1s ease-out forwards',
+              'pulse-glow': 'pulseGlow 3s infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(30px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              pulseGlow: {
+                '0%, 100%': { opacity: '1', filter: 'brightness(1) drop-shadow(0 0 10px rgba(255,0,0,0.5))' },
+                '50%': { opacity: '0.9', filter: 'brightness(1.3) drop-shadow(0 0 20px rgba(255,0,0,0.8))' },
+              }
+            },
+          }
+        }
+      }
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+        background-color: #050505;
+        color: #ffffff;
+      }
+      .font-display {
+        font-family: 'Bebas Neue', sans-serif;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-church-black text-church-text antialiased selection:bg-church-red selection:text-white">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

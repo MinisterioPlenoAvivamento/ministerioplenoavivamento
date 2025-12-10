@@ -1,0 +1,134 @@
+import React, { useState, useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { Menu, X, Flame, LayoutDashboard } from 'lucide-react';
+import { NAV_ITEMS } from '../constants';
+
+const Navbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
+
+  return (
+    <nav
+      className={`fixed w-full z-50 transition-all duration-500 ${
+        isScrolled || isOpen
+          ? 'bg-black/80 backdrop-blur-xl border-b border-white/5 shadow-2xl'
+          : 'bg-transparent border-transparent'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-24 items-center">
+          {/* Logo Section */}
+          <div className="flex-shrink-0 flex items-center">
+            <NavLink to="/" className="flex items-center gap-3 group">
+              <div className="relative">
+                <div className="absolute inset-0 bg-church-red blur-xl opacity-40 group-hover:opacity-80 transition-opacity animate-pulse"></div>
+                <Flame className="h-10 w-10 text-church-red relative z-10 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]" />
+              </div>
+              <div className="flex flex-col justify-center">
+                <span className="text-white font-display text-4xl leading-none tracking-wide group-hover:text-red-500 transition-colors drop-shadow-md">
+                  MINISTÉRIO PLENO
+                </span>
+                <span className="text-white font-sans font-bold text-[8px] tracking-[0.6em] uppercase pl-1 opacity-70">
+                  Avivamento
+                </span>
+              </div>
+            </NavLink>
+          </div>
+
+          {/* Desktop Menu */}
+          <div className="hidden lg:flex items-center space-x-2">
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) =>
+                  `px-5 py-2 text-xs font-bold uppercase tracking-widest transition-all duration-300 rounded-full font-sans ${
+                    isActive 
+                      ? 'text-white bg-white/10 shadow-[0_0_15px_rgba(255,255,255,0.1)]' 
+                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+
+            <div className="flex items-center gap-4 border-l border-white/10 pl-6 ml-4">
+              <NavLink to="/admin">
+                <button className="flex items-center gap-2 p-2 rounded-lg text-gray-500 hover:text-white hover:bg-white/5 transition-colors" title="Área Administrativa">
+                  <LayoutDashboard size={20} />
+                </button>
+              </NavLink>
+
+              <NavLink to="/contribuir">
+                <button className="px-8 py-3 rounded-full bg-church-red text-white font-display text-lg tracking-wide hover:bg-red-600 transition-all shadow-[0_0_20px_rgba(255,0,0,0.4)] hover:shadow-[0_0_30px_rgba(255,0,0,0.6)] hover:-translate-y-1">
+                  OFERTAR
+                </button>
+              </NavLink>
+            </div>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="lg:hidden flex items-center">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-200 hover:text-white focus:outline-none"
+            >
+              {isOpen ? <X className="h-8 w-8 text-church-red" /> : <Menu className="h-8 w-8" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`lg:hidden transition-all duration-500 ease-in-out overflow-hidden bg-black/95 backdrop-blur-2xl border-b border-church-red/20 ${
+          isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="px-4 pt-4 pb-8 space-y-2">
+          {NAV_ITEMS.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `block px-4 py-5 text-xl font-display uppercase tracking-wider transition-colors border-l-2 ${
+                  isActive
+                    ? 'border-church-red text-white bg-gradient-to-r from-church-red/10 to-transparent'
+                    : 'border-transparent text-gray-500 hover:text-white'
+                }`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+          <NavLink
+            to="/admin"
+            className="block px-4 py-5 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-white border-l-2 border-transparent"
+          >
+            <div className="flex items-center gap-3">
+              <LayoutDashboard size={18} />
+              Área Admin
+            </div>
+          </NavLink>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
