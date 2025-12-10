@@ -144,9 +144,9 @@ const Home: React.FC = () => {
              
              {/* Card 1: AO VIVO */}
              <Link to="/aovivo" className="group relative h-80 overflow-hidden rounded-3xl border border-white/5 bg-zinc-900 shadow-xl transition-all duration-500 hover:scale-[1.02]">
-               {/* Usando tag <img> para garantir que a imagem seja renderizada */}
+               {/* Usando tag <img> com a nova URL */}
                <img 
-                  src="https://images.unsplash.com/photo-1543269865-cbe426643c4f?q=80&w=800&auto=format&fit=crop"
+                  src="https://netshow.me/wp-content/uploads/2025/10/culto-aovivo-netshowme-divulgar-igreja3-e1499205975311-1-scaled-1-768x430.jpg"
                   alt="Culto Ao Vivo"
                   className="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                />
