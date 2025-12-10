@@ -332,6 +332,11 @@ const AdminDashboard: React.FC = () => {
                     </div>
                     
                     <div>
+                      <label className={labelClass}>Telefone Fixo / Alternativo</label>
+                      <input type="tel" className={inputClass} value={formData.contact.phone || ''} onChange={(e) => updateNested('contact', 'phone', e.target.value)} />
+                    </div>
+
+                    <div>
                       <label className={labelClass}>E-mail</label>
                       <input type="email" className={inputClass} value={formData.contact.email || ''} onChange={(e) => updateNested('contact', 'email', e.target.value)} />
                     </div>

@@ -45,6 +45,7 @@ export interface ContactInfo {
   cityState: string;
   whatsapp: string;
   email: string;
+  phone: string; // Added phone field
   mapUrl?: string; // Optional embedded map URL
 }
 

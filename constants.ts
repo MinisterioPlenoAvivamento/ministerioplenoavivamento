@@ -22,10 +22,11 @@ export const INITIAL_DATA: ChurchData = {
     verseReference: "Habacuque 3:2"
   },
   contact: {
-    address: "Rua do Avivamento, 777 - Centro",
-    cityState: "Bauru - SP",
-    whatsapp: "(11) 98888-8888",
-    email: "contato@avivamentopleno.com.br"
+    address: "Rua: Torquato Gonçalves Andrade N° 2-79 Jardim Prudência",
+    cityState: "Bauru-SP",
+    whatsapp: "(14) 997249515",
+    email: "wellvillsants@gmail.com",
+    phone: "(14) 997249515"
   },
   social: {
     instagram: "https://instagram.com",
