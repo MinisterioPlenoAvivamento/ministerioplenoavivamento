@@ -144,8 +144,12 @@ const Home: React.FC = () => {
              
              {/* Card 1: AO VIVO */}
              <Link to="/aovivo" className="group relative h-80 overflow-hidden rounded-3xl border border-white/5 bg-zinc-900 shadow-xl transition-all duration-500 hover:scale-[1.02]">
-               {/* Nova imagem de fundo para o Live */}
-               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1543269865-cbe426643c4f?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+               {/* Usando tag <img> para garantir que a imagem seja renderizada */}
+               <img 
+                  src="https://images.unsplash.com/photo-1543269865-cbe426643c4f?q=80&w=800&auto=format&fit=crop"
+                  alt="Culto Ao Vivo"
+                  className="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+               />
                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                <div className="absolute inset-0 p-8 flex flex-col justify-end z-10">
                  <Video className="text-church-red mb-4 h-10 w-10 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]" />
