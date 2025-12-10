@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
     setIsOpen(false);
   }, [location]);
   
-  const handleLogoClick = () => {
+  const handleLogoClick = (e: React.MouseEvent) => {
     clickCountRef.current += 1;
 
     if (timerRef.current) {
@@ -33,6 +33,7 @@ const Navbar: React.FC = () => {
     }
 
     if (clickCountRef.current >= 3) {
+      e.preventDefault(); // <--- Adicionado para impedir a navegação padrão do NavLink
       showSuccess('Modo Admin ativado! Redirecionando para o login...');
       clickCountRef.current = 0;
       navigate('/admin/login');
