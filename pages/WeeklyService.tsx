@@ -83,21 +83,6 @@ const WeeklyService: React.FC = () => {
             <div className="bg-zinc-900 rounded-2xl shadow-lg p-6 border border-white/5">
               <PhotoGallery images={data.gallery} />
             </div>
-            
-            {/* Contact Info (Mantido para acesso rápido) */}
-            <div className="bg-church-dark rounded-2xl shadow-lg p-6 border border-white/5">
-              <h3 className="font-bold text-lg text-white mb-4 border-b border-white/10 pb-3">
-                Precisa de Ajuda?
-              </h3>
-              <p className="text-gray-400 text-sm mb-4">
-                Fale conosco para mais informações sobre o culto ou se precisar de oração.
-              </p>
-              <Link to="/contato">
-                 <Button variant="outline" fullWidth className="py-3 text-sm">
-                    Falar com a Equipe
-                 </Button>
-              </Link>
-            </div>
           </div>
         </div>
       </div>
