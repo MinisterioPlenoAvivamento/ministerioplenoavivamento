@@ -18,7 +18,7 @@ export const INITIAL_DATA: ChurchData = {
     pastorImage: "https://i.imgur.com/LeGJXLb.jpeg", 
     heroImage: "https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?q=80&w=1920&auto=format&fit=crop", // Lion in Dark Background
     heroVideo: "", // Set a video URL in Dashboard to override the image
-    backgroundAudioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // Default test audio
+    backgroundAudioUrl: "/yeshua-jesus-image-instrumental-worship-piano-pad-nncdxdi4xis_p6ad5zkc.mp3", // Using relative path for public folder
     welcomeMessage: "Deus deseja transformar a vida de cada um de seus filhos. Por isso, peça e receberás!",
     verse: "Ouvi, Senhor, a tua palavra, e temi; aviva, ó Senhor, a tua obra no meio dos anos, no meio dos anos a notifica; na ira lembra-te da misericórdia.",
     verseReference: "Habacuque 3:2"
