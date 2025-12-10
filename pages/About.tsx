@@ -47,7 +47,7 @@ const About: React.FC = () => {
               </div>
               <h3 className="text-xl font-bold mb-4 text-white">Missão</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Preguiça o evangelho genuíno, promover o avivamento espiritual e discipular as nações, levando cada pessoa a um relacionamento profundo com Deus.
+                Pregar o evangelho genuíno, promover o avivamento espiritual e discipular as nações, levando cada pessoa a um relacionamento profundo com Deus.
               </p>
             </div>
 
