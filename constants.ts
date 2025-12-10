@@ -49,7 +49,7 @@ export const INITIAL_DATA: ChurchData = {
   multimedia: {
     liveUrl: "https://youtube.com",
     isLiveNow: true,
-    liveTitle: "Culto de Domingo - Ao Vivo",
+    liveTitle: "Culto de Sábado - Ao Vivo",
     podcastUrl: "https://spotify.com",
     latestPodcasts: [
       {
