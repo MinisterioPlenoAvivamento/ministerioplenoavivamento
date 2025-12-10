@@ -146,7 +146,7 @@ const Home: React.FC = () => {
              <Link to="/aovivo" className="group relative h-80 overflow-hidden rounded-3xl border border-white/5 bg-zinc-900 shadow-xl transition-all duration-500 hover:scale-[1.02]">
                {/* Usando uma imagem mais genérica e confiável para o Live */}
                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
-               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                <div className="absolute inset-0 p-8 flex flex-col justify-end z-10">
                  <Video className="text-church-red mb-4 h-10 w-10 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]" />
                  <h3 className="text-4xl font-display text-white mb-2">AO VIVO</h3>
