@@ -569,20 +569,6 @@ const AdminDashboard: React.FC = () => {
                  </div>
               </div>
             )}
-
-            {/* DANGER ZONE (Mobile & Desktop) */}
-            <div className="mt-20 border-t-2 border-red-900/20 pt-10">
-               <div className="bg-red-950/10 border border-red-900/30 rounded-xl p-6 text-center">
-                  <h4 className="text-red-500 font-bold mb-2">ZONA DE PERIGO</h4>
-                  <p className="text-xs text-red-400/60 mb-6 max-w-md mx-auto">Se o site estiver quebrado ou você quiser começar do zero, use este botão. Cuidado: apaga tudo o que você editou.</p>
-                  <button 
-                    onClick={handleReset} 
-                    className="bg-red-900/20 hover:bg-red-900 text-red-500 hover:text-white px-8 py-3 rounded-lg text-xs font-bold uppercase tracking-widest border border-red-900/50 transition-all"
-                  >
-                    RESTAURAR PADRÃO DE FÁBRICA (CORRIGIR LAYOUT)
-                  </button>
-               </div>
-            </div>
         </div>
       </main>
     </div>
