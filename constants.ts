@@ -42,6 +42,7 @@ export const INITIAL_DATA: ChurchData = {
     favored: "Wellington Villares dos Santos",
     cnpj: "", // Deixado em branco conforme solicitado
     pixKey: "338.076.628-39", // Chave PIX (CPF) para exibição
+    pixKeyType: 'CPF', // Novo valor inicial
     pixCode: "00020126450014BR.GOV.BCB.PIX0123wellvillsants@gmail.com5204000053039865802BR5901N6001C62070503***6304C5F3" // Código PIX Completo (BR Code)
   },
   history: `

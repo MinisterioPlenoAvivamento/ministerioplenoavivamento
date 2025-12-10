@@ -465,10 +465,26 @@ const AdminDashboard: React.FC = () => {
               <div className="space-y-6">
                 <div className={sectionClass}>
                   <div className="grid grid-cols-1 gap-6">
+                    
+                    {/* Novo Seletor de Tipo de Chave PIX */}
                     <div>
-                      <label className={labelClass}>Chave PIX (CNPJ/Email/Telefone)</label>
+                        <label className={labelClass}>Tipo de Chave PIX</label>
+                        <select
+                            className={inputClass}
+                            value={formData.bank.pixKeyType}
+                            onChange={(e) => updateNested('bank', 'pixKeyType', e.target.value as 'CPF' | 'E-mail' | 'Telefone' | 'Aleatória')}
+                        >
+                            <option value="CPF">CPF</option>
+                            <option value="E-mail">E-mail</option>
+                            <option value="Telefone">Telefone</option>
+                            <option value="Aleatória">Aleatória</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                      <label className={labelClass}>Chave PIX (Valor)</label>
                       <input type="text" className={inputClass} value={formData.bank.pixKey || ''} onChange={(e) => updateNested('bank', 'pixKey', e.target.value)} />
-                      <p className="text-[10px] text-gray-500 mt-2">Usada para o botão "Copiar Chave".</p>
+                      <p className="text-[10px] text-gray-500 mt-2">O valor da chave PIX que será exibido e copiado.</p>
                     </div>
                     
                     <div>
@@ -657,7 +673,7 @@ const AdminDashboard: React.FC = () => {
                                     onClick={() => handleDeleteItem('events', event.id)} 
                                     className="absolute -top-2 -right-2 bg-red-600 text-white p-2 rounded-full shadow-lg hover:scale-110 transition-transform z-10"
                                 >
-                                    <Trash2 size={16} />
+                                    <Trash2 size={20} />
                                 </button>
                             </div>
                         ))}
