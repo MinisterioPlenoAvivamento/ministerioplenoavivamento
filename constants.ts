@@ -93,5 +93,11 @@ export const INITIAL_DATA: ChurchData = {
       description: 'Três dias de imersão na presença de Deus com preletores convidados.',
       tag: 'Conferência'
     }
+  ],
+  gallery: [
+    { id: 'g1', url: 'https://picsum.photos/id/1015/600/400', alt: 'Adoração' },
+    { id: 'g2', url: 'https://picsum.photos/id/1018/600/400', alt: 'Pregação' },
+    { id: 'g3', url: 'https://picsum.photos/id/1020/600/400', alt: 'Comunhão' },
+    { id: 'g4', url: 'https://picsum.photos/id/1024/600/400', alt: 'Batismo' },
   ]
 };

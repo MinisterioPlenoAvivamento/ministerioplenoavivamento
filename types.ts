@@ -30,6 +30,12 @@ export interface Event {
   tag?: string;
 }
 
+export interface GalleryImage {
+  id: string;
+  url: string;
+  alt: string;
+}
+
 export interface MultimediaConfig {
   liveUrl: string;
   isLiveNow: boolean;
@@ -79,5 +85,6 @@ export interface ChurchData {
   sermons: Sermon[];
   services: Service[]; // New field
   events: Event[]; // New field
+  gallery: GalleryImage[]; // New field
   multimedia: MultimediaConfig;
 }

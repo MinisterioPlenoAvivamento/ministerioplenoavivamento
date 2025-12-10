@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useChurchData } from '../context/ChurchContext';
 import Button from '../components/Button';
-import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, Image as ImageIcon, CheckCircle, Flame, X, ExternalLink, Headphones, MessageCircle, AlertTriangle, RotateCcw, Loader2, Radio } from 'lucide-react';
+import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, Image as ImageIcon, CheckCircle, Flame, X, ExternalLink, MessageCircle, AlertTriangle, RotateCcw, Loader2, Radio, GalleryHorizontal } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AdminDashboard: React.FC = () => {
@@ -77,12 +77,11 @@ const AdminDashboard: React.FC = () => {
     }));
   };
 
-  const handleDeleteSermon = (e: React.MouseEvent, id: string) => {
-    e.stopPropagation();
+  const handleDeleteItem = (section: 'sermons' | 'gallery', id: string) => {
     if (window.confirm('Apagar item?')) {
       setFormData(prev => ({
         ...prev,
-        sermons: (prev.sermons || []).filter(item => String(item.id) !== String(id))
+        [section]: (prev[section] || []).filter(item => String(item.id) !== String(id))
       }));
     }
   };
@@ -91,6 +90,13 @@ const AdminDashboard: React.FC = () => {
     setFormData(prev => ({
       ...prev,
       sermons: prev.sermons.map((item) => String(item.id) === String(id) ? { ...item, [field]: value } : item)
+    }));
+  };
+  
+  const handleUpdateGallery = (id: string, field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      gallery: prev.gallery.map((item) => String(item.id) === String(id) ? { ...item, [field]: value } : item)
     }));
   };
 
@@ -116,7 +122,8 @@ const AdminDashboard: React.FC = () => {
             { id: 'general', icon: Settings, label: 'Geral & Contato' },
             { id: 'history', icon: FileText, label: 'História & Textos' },
             { id: 'financial', icon: DollarSign, label: 'Financeiro' },
-            { id: 'sermons', icon: Video, label: 'Mídia & Cultos' }
+            { id: 'sermons', icon: Video, label: 'Mídia & Cultos' },
+            { id: 'gallery', icon: GalleryHorizontal, label: 'Galeria de Fotos' }
           ].map((item) => (
              <button 
                 key={item.id}
@@ -166,7 +173,8 @@ const AdminDashboard: React.FC = () => {
                 { id: 'general', label: 'Geral' },
                 { id: 'history', label: 'História' },
                 { id: 'financial', label: 'Financeiro' },
-                { id: 'sermons', label: 'Mídia' }
+                { id: 'sermons', label: 'Mídia' },
+                { id: 'gallery', label: 'Galeria' }
               ].map((item) => (
                  <button 
                     key={item.id}
@@ -189,6 +197,7 @@ const AdminDashboard: React.FC = () => {
                 {activeTab === 'history' && 'Conteúdo Institucional'}
                 {activeTab === 'financial' && 'Dados Bancários'}
                 {activeTab === 'sermons' && 'Central de Mídia'}
+                {activeTab === 'gallery' && 'Galeria de Fotos'}
               </h1>
               <div className="flex gap-3">
                  <button onClick={handleReset} className="px-4 py-2 border border-zinc-700 text-gray-400 rounded hover:text-white text-xs font-bold uppercase flex items-center gap-2">
@@ -482,7 +491,59 @@ const AdminDashboard: React.FC = () => {
 
                                 <button 
                                     type="button" 
-                                    onClick={(e) => handleDeleteSermon(e, sermon.id)} 
+                                    onClick={() => handleDeleteItem('sermons', sermon.id)} 
+                                    className="absolute -top-2 -right-2 bg-red-600 text-white p-2 rounded-full shadow-lg hover:scale-110 transition-transform z-10"
+                                >
+                                    <Trash2 size={20} />
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                 </div>
+              </div>
+            )}
+            
+            {/* --- GALLERY TAB --- */}
+            {activeTab === 'gallery' && (
+              <div className="space-y-8">
+                 <div>
+                    <div className="flex justify-between items-center mb-4 sticky top-14 bg-black z-30 py-4 border-b border-zinc-900">
+                        <h3 className="text-lg font-bold text-white uppercase flex items-center gap-2"><GalleryHorizontal size={18} /> Galeria de Fotos</h3>
+                        <Button 
+                            type="button"
+                            variant="white"
+                            className="px-6 py-2 text-xs h-10"
+                            onClick={() => setFormData(prev => ({
+                            ...prev,
+                            gallery: [...(prev.gallery || []), { id: Date.now().toString(), url: 'https://picsum.photos/600/400', alt: 'Nova Foto' }]
+                            }))}
+                        >
+                            <Plus size={16} className="mr-1" /> Adicionar Foto
+                        </Button>
+                    </div>
+
+                    <div className="space-y-6">
+                        {(formData.gallery || []).map((photo) => (
+                            <div key={photo.id} className="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl flex flex-col gap-4 shadow-lg relative">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-24 h-24 bg-black rounded-lg overflow-hidden border border-zinc-700 flex-shrink-0">
+                                        <img src={photo.url} alt={photo.alt} className="w-full h-full object-cover" />
+                                    </div>
+                                    <div className="flex-1 min-w-0 space-y-3">
+                                        <div>
+                                            <label className={labelClass}>Link da Imagem (URL)</label>
+                                            <input type="text" className={inputClass} value={photo.url || ''} onChange={(e) => handleUpdateGallery(photo.id, 'url', e.target.value)} />
+                                        </div>
+                                        <div>
+                                            <label className={labelClass}>Descrição (Alt Text)</label>
+                                            <input type="text" className={inputClass} value={photo.alt || ''} onChange={(e) => handleUpdateGallery(photo.id, 'alt', e.target.value)} />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button 
+                                    type="button" 
+                                    onClick={() => handleDeleteItem('gallery', photo.id)} 
                                     className="absolute -top-2 -right-2 bg-red-600 text-white p-2 rounded-full shadow-lg hover:scale-110 transition-transform z-10"
                                 >
                                     <Trash2 size={20} />

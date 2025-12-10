@@ -3,6 +3,7 @@ import { useChurchData } from '../context/ChurchContext';
 import { Calendar, Clock, MapPin, Flame, ArrowRight } from 'lucide-react';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
+import PhotoGallery from '../components/PhotoGallery';
 
 const WeeklyService: React.FC = () => {
   const { data } = useChurchData();
@@ -77,28 +78,13 @@ const WeeklyService: React.FC = () => {
             </div>
           </div>
 
-          {/* Sidebar - Other Services */}
+          {/* Sidebar - Photo Gallery */}
           <div className="lg:col-span-1 space-y-8">
             <div className="bg-zinc-900 rounded-2xl shadow-lg p-6 border border-white/5">
-              <h3 className="font-bold text-lg text-white mb-4 border-b border-white/10 pb-3">
-                Outros Encontros
-              </h3>
-              <ul className="space-y-4">
-                {data.services.filter(s => s.day !== 'Sábado').map((service, idx) => (
-                  <li key={idx} className="flex justify-between items-center text-sm text-gray-400">
-                    <span className="font-bold text-white">{service.day}</span>
-                    <span className="flex items-center gap-2">
-                      <Clock size={14} className="text-church-red" /> {service.time}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-6 pt-4 border-t border-white/10">
-                 <p className="text-xs text-gray-500">Confira a agenda completa para eventos especiais.</p>
-              </div>
+              <PhotoGallery images={data.gallery} />
             </div>
             
-            {/* Contact Info */}
+            {/* Contact Info (Mantido para acesso rápido) */}
             <div className="bg-church-dark rounded-2xl shadow-lg p-6 border border-white/5">
               <h3 className="font-bold text-lg text-white mb-4 border-b border-white/10 pb-3">
                 Precisa de Ajuda?
