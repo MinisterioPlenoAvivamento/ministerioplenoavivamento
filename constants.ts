@@ -14,7 +14,7 @@ export const INITIAL_DATA: ChurchData = {
   general: {
     churchName: "Ministério Pleno Avivamento",
     pastorName: "Ev. Wellington Villares",
-    pastorImage: "https://i.imgur.com/9239bd33.jpg", 
+    pastorImage: "https://i.imgur.com/LeGJXLb.jpeg", 
     heroImage: "https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?q=80&w=1920&auto=format&fit=crop", // Lion in Dark Background
     heroVideo: "", // Set a video URL in Dashboard to override the image
     welcomeMessage: "Avivando Vidas, Transformando Destinos",
