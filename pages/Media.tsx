@@ -5,6 +5,12 @@ import { Play, Mic, Video, Search } from 'lucide-react';
 const Media: React.FC = () => {
   const { data } = useChurchData();
   const latestSermon = data.sermons[0];
+  
+  const handleVideoClick = (url: string) => {
+    if (url) {
+      window.open(url, '_blank');
+    }
+  };
 
   return (
     <div className="pt-24 bg-church-black min-h-screen">
@@ -30,7 +36,10 @@ const Media: React.FC = () => {
             <h2 className="text-lg font-bold text-gray-300 mb-6 flex items-center gap-2 uppercase tracking-widest">
               <div className="w-1 h-4 bg-church-red"></div> Destaque
             </h2>
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video bg-zinc-900 group cursor-pointer border border-white/5">
+            <div 
+              className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video bg-zinc-900 group cursor-pointer border border-white/5"
+              onClick={() => handleVideoClick(latestSermon.videoUrl)}
+            >
               <img 
                 src="https://picsum.photos/id/1025/1200/675" 
                 alt="Latest Sermon" 
@@ -63,7 +72,11 @@ const Media: React.FC = () => {
         {/* Video Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {data.sermons.map((sermon) => (
-            <div key={sermon.id} className="bg-church-dark rounded-xl overflow-hidden border border-white/5 group hover:border-church-red/50 transition-all duration-300 hover:-translate-y-1">
+            <div 
+              key={sermon.id} 
+              className="bg-church-dark rounded-xl overflow-hidden border border-white/5 group hover:border-church-red/50 transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+              onClick={() => handleVideoClick(sermon.videoUrl)}
+            >
               <div className="relative aspect-video">
                 <img src={sermon.thumbnail} alt={sermon.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">

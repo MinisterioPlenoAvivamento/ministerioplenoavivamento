@@ -438,12 +438,12 @@ const AdminDashboard: React.FC = () => {
                        
                        <div>
                            <label className={labelClass}>Título da Transmissão</label>
-                           <input type="text" className={inputClass} value={formData.multimedia?.liveTitle || ''} onChange={(e) => setFormData(prev => ({ ...prev, multimedia: { ...prev.multimedia, liveTitle: e.target.value } }))} />
+                           <input type="text" className={inputClass} value={formData.multimedia?.liveTitle || ''} onChange={(e) => updateNested('multimedia', 'liveTitle', e.target.value)} />
                        </div>
                        
                        <div>
                            <label className={labelClass}>Link do YouTube</label>
-                           <input type="text" className={inputClass} value={formData.multimedia?.liveUrl || ''} onChange={(e) => setFormData(prev => ({ ...prev, multimedia: { ...prev.multimedia, liveUrl: e.target.value } }))} />
+                           <input type="text" className={inputClass} value={formData.multimedia?.liveUrl || ''} onChange={(e) => updateNested('multimedia', 'liveUrl', e.target.value)} />
                        </div>
                     </div>
                  </div>
@@ -458,7 +458,7 @@ const AdminDashboard: React.FC = () => {
                             className="px-6 py-2 text-xs h-10"
                             onClick={() => setFormData(prev => ({
                             ...prev,
-                            sermons: [...(prev.sermons || []), { id: Date.now().toString(), title: 'Nova Mensagem', preacher: prev.general.pastorName, date: 'Hoje', duration: '00:00', thumbnail: 'https://picsum.photos/600/400' }]
+                            sermons: [...(prev.sermons || []), { id: Date.now().toString(), title: 'Nova Mensagem', preacher: prev.general.pastorName, date: 'Hoje', duration: '00:00', thumbnail: 'https://picsum.photos/600/400', videoUrl: '' }]
                             }))}
                         >
                             <Plus size={16} className="mr-1" /> Adicionar
@@ -497,6 +497,10 @@ const AdminDashboard: React.FC = () => {
                                             <label className={labelClass}>Duração</label>
                                             <input type="text" className={inputClass} value={sermon.duration || ''} onChange={(e) => handleUpdateSermon(sermon.id, 'duration', e.target.value)} />
                                         </div>
+                                    </div>
+                                    <div className="md:col-span-2">
+                                        <label className={labelClass}>Link do Vídeo (YouTube/Vimeo)</label>
+                                        <input type="text" className={inputClass} value={sermon.videoUrl || ''} onChange={(e) => handleUpdateSermon(sermon.id, 'videoUrl', e.target.value)} />
                                     </div>
                                 </div>
 

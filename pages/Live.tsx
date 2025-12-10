@@ -22,6 +22,12 @@ const Live: React.FC = () => {
       });
     }
   };
+  
+  const handleVideoClick = (url: string) => {
+    if (url) {
+      window.open(url, '_blank');
+    }
+  };
 
   return (
     <div className="pt-24 bg-church-black min-h-screen">
@@ -138,7 +144,11 @@ const Live: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
              {data.sermons.map((sermon) => (
-               <div key={sermon.id} className="group cursor-pointer">
+               <div 
+                  key={sermon.id} 
+                  className="group cursor-pointer"
+                  onClick={() => handleVideoClick(sermon.videoUrl)}
+                >
                   <div className="relative rounded-xl overflow-hidden aspect-video mb-4 border border-white/5 shadow-lg">
                      <img src={sermon.thumbnail} alt={sermon.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-100" />
                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">

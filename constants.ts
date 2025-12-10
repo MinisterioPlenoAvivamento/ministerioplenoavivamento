@@ -61,6 +61,7 @@ export const INITIAL_DATA: ChurchData = {
       date: '10 Set 2023',
       thumbnail: 'https://picsum.photos/id/231/600/400',
       duration: '45:20',
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Placeholder URL
     },
     {
       id: '2',
@@ -69,6 +70,7 @@ export const INITIAL_DATA: ChurchData = {
       date: '03 Set 2023',
       thumbnail: 'https://picsum.photos/id/232/600/400',
       duration: '52:10',
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Placeholder URL
     },
     {
       id: '3',
@@ -77,6 +79,7 @@ export const INITIAL_DATA: ChurchData = {
       date: '27 Ago 2023',
       thumbnail: 'https://picsum.photos/id/233/600/400',
       duration: '38:45',
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Placeholder URL
     },
   ],
   services: [

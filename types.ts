@@ -12,6 +12,7 @@ export interface Sermon {
   date: string;
   thumbnail: string;
   duration: string;
+  videoUrl: string; // New field for the video link
 }
 
 export interface Service {
