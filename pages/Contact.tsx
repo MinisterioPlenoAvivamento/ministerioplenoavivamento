@@ -56,6 +56,13 @@ const Contact: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+  
+  const handleOpenGps = () => {
+    const fullAddress = `${data.contact.address}, ${data.contact.cityState}, Brasil`;
+    // Cria um link de busca universal para o Google Maps
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
+    window.open(mapUrl, '_blank');
+  };
 
   return (
     <div className="pt-24 bg-church-black min-h-screen">
@@ -109,7 +116,13 @@ const Contact: React.FC = () => {
              <div className="h-64 bg-zinc-900 rounded-2xl border border-white/5 relative overflow-hidden group">
                 <img src="https://picsum.photos/id/122/800/400" alt="Map" className="w-full h-full object-cover opacity-30 grayscale group-hover:grayscale-0 transition-all duration-500" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                   <Button variant="outline" className="backdrop-blur-sm bg-black/50 border-white/30 hover:bg-church-red hover:border-church-red">Abrir no GPS</Button>
+                   <Button 
+                      variant="outline" 
+                      className="backdrop-blur-sm bg-black/50 border-white/30 hover:bg-church-red hover:border-church-red"
+                      onClick={handleOpenGps} // Adicionado o handler de clique
+                   >
+                      Abrir no GPS
+                   </Button>
                 </div>
              </div>
           </div>
