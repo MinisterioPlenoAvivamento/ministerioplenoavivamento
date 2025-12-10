@@ -10,6 +10,8 @@ import Contact from './pages/Contact';
 import Live from './pages/Live';
 import WeeklyService from './pages/WeeklyService';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminLogin from './pages/AdminLogin'; // Novo
+import AdminRouteGuard from './components/AdminRouteGuard'; // Novo
 import { ChurchProvider, useChurchData } from './context/ChurchContext';
 import BackgroundAudioPlayer from './components/BackgroundAudioPlayer'; 
 import ToastProvider from './components/ToastProvider';
@@ -24,15 +26,16 @@ const ScrollToTop = () => {
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const location = useLocation();
-  const isAdmin = location.pathname.startsWith('/admin');
+  // Verifica se a rota começa com /admin (incluindo /admin/login e /admin/dashboard)
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
     <div className="flex flex-col min-h-screen font-sans bg-church-black text-gray-100">
-      {!isAdmin && <Navbar />}
+      {!isAdminRoute && <Navbar />}
       <main className="flex-grow">
         {children}
       </main>
-      {!isAdmin && <Footer />}
+      {!isAdminRoute && <Footer />}
     </div>
   );
 }
@@ -54,7 +57,14 @@ const AppContent: React.FC = () => {
           <Route path="/mensagens" element={<Media />} />
           <Route path="/contribuir" element={<Give />} />
           <Route path="/contato" element={<Contact />} />
-          <Route path="/admin" element={<AdminDashboard />} />
+          
+          {/* Rotas de Administração */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminRouteGuard />}>
+            <Route path="dashboard" element={<AdminDashboard />} />
+            {/* Redireciona /admin para /admin/dashboard se logado */}
+            <Route index element={<AdminDashboard />} /> 
+          </Route>
         </Routes>
       </Layout>
     </>

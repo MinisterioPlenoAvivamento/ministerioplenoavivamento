@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Flame, LayoutDashboard } from 'lucide-react';
 import { NAV_ITEMS } from '../constants';
+import { showSuccess } from '../utils/toast';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const clickCountRef = useRef(0);
+  const timerRef = useRef<number | null>(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +24,25 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
+  
+  const handleLogoClick = () => {
+    clickCountRef.current += 1;
+
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    if (clickCountRef.current >= 3) {
+      showSuccess('Modo Admin ativado! Redirecionando para o login...');
+      clickCountRef.current = 0;
+      navigate('/admin/login');
+    } else {
+      // Reset counter after 1 second if not enough clicks
+      timerRef.current = window.setTimeout(() => {
+        clickCountRef.current = 0;
+      }, 1000);
+    }
+  };
 
   return (
     <nav
@@ -31,9 +54,9 @@ const Navbar: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-24 items-center">
-          {/* Logo Section */}
+          {/* Logo Section - Clickable for Admin Activation */}
           <div className="flex-shrink-0 flex items-center">
-            <NavLink to="/" className="flex items-center gap-3 group">
+            <NavLink to="/" className="flex items-center gap-3 group" onClick={handleLogoClick}>
               <div className="relative">
                 <div className="absolute inset-0 bg-church-red blur-xl opacity-40 group-hover:opacity-80 transition-opacity animate-pulse"></div>
                 <Flame className="h-10 w-10 text-church-red relative z-10 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]" />
@@ -68,7 +91,7 @@ const Navbar: React.FC = () => {
             ))}
 
             <div className="flex items-center gap-4 border-l border-white/10 pl-6 ml-4">
-              <NavLink to="/admin">
+              <NavLink to="/admin/login">
                 <button className="flex items-center gap-2 p-2 rounded-lg text-gray-500 hover:text-white hover:bg-white/5 transition-colors" title="Área Administrativa">
                   <LayoutDashboard size={20} />
                 </button>
@@ -117,7 +140,7 @@ const Navbar: React.FC = () => {
             </NavLink>
           ))}
           <NavLink
-            to="/admin"
+            to="/admin/login"
             className="block px-4 py-5 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-white border-l-2 border-transparent"
           >
             <div className="flex items-center gap-3">
