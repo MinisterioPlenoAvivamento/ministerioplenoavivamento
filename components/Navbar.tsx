@@ -91,11 +91,7 @@ const Navbar: React.FC = () => {
             ))}
 
             <div className="flex items-center gap-4 border-l border-white/10 pl-6 ml-4">
-              <NavLink to="/admin/login">
-                <button className="flex items-center gap-2 p-2 rounded-lg text-gray-500 hover:text-white hover:bg-white/5 transition-colors" title="Área Administrativa">
-                  <LayoutDashboard size={20} />
-                </button>
-              </NavLink>
+              {/* Link Admin Removido */}
 
               <NavLink to="/contribuir">
                 <button className="px-8 py-3 rounded-full bg-church-red text-white font-display text-lg tracking-wide hover:bg-red-600 transition-all shadow-[0_0_20px_rgba(255,0,0,0.4)] hover:shadow-[0_0_30px_rgba(255,0,0,0.6)] hover:-translate-y-1">
@@ -139,15 +135,7 @@ const Navbar: React.FC = () => {
               {item.label}
             </NavLink>
           ))}
-          <NavLink
-            to="/admin/login"
-            className="block px-4 py-5 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-white border-l-2 border-transparent"
-          >
-            <div className="flex items-center gap-3">
-              <LayoutDashboard size={18} />
-              Área Admin
-            </div>
-          </NavLink>
+          {/* Link Admin Mobile Removido */}
         </div>
       </div>
     </nav>

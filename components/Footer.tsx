@@ -68,11 +68,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-white/5 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
           <p>&copy; {new Date().getFullYear()} {data.general.churchName}. Todos os direitos reservados.</p>
-          <div className="flex items-center gap-6 mt-4 md:mt-0">
-            <Link to="/admin" className="flex items-center gap-2 text-gray-700 hover:text-church-red transition-colors" title="Admin">
-              <Lock size={12} /> Área Restrita
-            </Link>
-          </div>
+          {/* Link de Admin Removido */}
         </div>
       </div>
     </footer>
