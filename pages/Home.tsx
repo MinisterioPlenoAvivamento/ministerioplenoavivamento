@@ -12,7 +12,7 @@ const Home: React.FC = () => {
       {/* Hero Section - CINEMATIC & DYNAMIC */}
       <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
         
-        {/* Background Layer (Video ou Image) */}
+        {/* Background Layer (Video or Image) */}
         <div className="absolute inset-0 z-0">
           {data.general.heroVideo ? (
              <video 
@@ -94,16 +94,10 @@ const Home: React.FC = () => {
       <section className="bg-church-dark py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-church-red/20 via-church-black to-church-black"></div>
         <div className="max-w-6xl mx-auto px-4 text-center relative z-10">
-          
-          {/* Versículo com Animação de Desdobramento */}
-          <div className="inline-block animate-unfold-text" style={{ animationDelay: '0.5s' }}>
-            <p className="text-3xl md:text-5xl font-serif text-white font-medium leading-tight drop-shadow-lg">
-              "{data.general.verse}"
-            </p>
-          </div>
-          
-          {/* Referência com Animação de Desdobramento e Atraso */}
-          <div className="mt-10 inline-block border-t border-church-red/50 pt-4 animate-unfold-text" style={{ animationDelay: '1.5s' }}>
+          <p className="text-3xl md:text-5xl font-serif text-white font-medium leading-tight drop-shadow-lg">
+            "{data.general.verse}"
+          </p>
+          <div className="mt-10 inline-block border-t border-church-red/50 pt-4">
              <p className="text-church-red font-display tracking-widest uppercase text-xl">{data.general.verseReference}</p>
           </div>
         </div>
@@ -129,7 +123,7 @@ const Home: React.FC = () => {
                    <h2 className="text-5xl md:text-6xl font-display text-white mb-8 leading-none">
                       UMA PALAVRA PARA <br/> O SEU CORAÇÃO
                    </h2>
-                   <p className="text-gray-400 text-lg mb-10 max-w-2xl">
+                   <p className="text-gray-400 mb-10 font-light leading-relaxed text-lg">
                       O {data.general.churchName} é um lugar de novos começos. Sob a liderança do {data.general.pastorName}, temos vivido dias de glória e manifestação do poder de Deus.
                    </p>
                    <Link to="/sobre">
@@ -152,7 +146,7 @@ const Home: React.FC = () => {
              <Link to="/aovivo" className="group relative h-80 overflow-hidden rounded-3xl border border-white/5 bg-zinc-900 shadow-xl transition-all duration-500 hover:scale-[1.02]">
                {/* Usando tag <img> com a nova URL */}
                <img 
-                  src="https://netshow.me/wp-content/uploads/2025/10/culto-aovivo-netshowme-divulgar-igreja3-e1499205975311-1-768x430.jpg"
+                  src="https://netshow.me/wp-content/uploads/2025/10/culto-aovivo-netshowme-divulgar-igreja3-e1499205975311-1-scaled-1-768x430.jpg"
                   alt="Culto Ao Vivo"
                   className="absolute inset-0 w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                />
