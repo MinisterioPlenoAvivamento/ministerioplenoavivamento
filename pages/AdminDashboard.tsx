@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useChurchData } from '../context/ChurchContext';
 import Button from '../components/Button';
-import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, Image as ImageIcon, CheckCircle, Flame, X, ExternalLink, MessageCircle, AlertTriangle, RotateCcw, Loader2, Radio, GalleryHorizontal, Music, LogOut, Mail } from 'lucide-react';
+import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, Image as ImageIcon, CheckCircle, Flame, X, ExternalLink, MessageCircle, AlertTriangle, RotateCcw, Loader2, Radio, GalleryHorizontal, Music, LogOut, Mail, Instagram, Facebook, Youtube } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import ImageUploader from '../components/ImageUploader';
 import ContactMessagesManager from '../components/ContactMessagesManager'; // Importando o novo componente
@@ -359,6 +359,37 @@ const AdminDashboard: React.FC = () => {
                     </div>
                   </div>
                 </div>
+                
+                {/* NEW SOCIAL MEDIA SECTION */}
+                <div className={sectionClass}>
+                  <h3 className="text-white font-bold mb-6 border-b border-zinc-800 pb-2 flex items-center gap-2">
+                    <Instagram size={18} className="text-church-red" /> Redes Sociais
+                  </h3>
+                  <div className="grid grid-cols-1 gap-6">
+                    <div>
+                      <label className={labelClass}>Link do Instagram</label>
+                      <div className="relative">
+                        <Instagram size={18} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                        <input type="url" className={`${inputClass} pl-12`} value={formData.social.instagram || ''} onChange={(e) => updateNested('social', 'instagram', e.target.value)} placeholder="https://instagram.com/..." />
+                      </div>
+                    </div>
+                    <div>
+                      <label className={labelClass}>Link do Facebook</label>
+                      <div className="relative">
+                        <Facebook size={18} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                        <input type="url" className={`${inputClass} pl-12`} value={formData.social.facebook || ''} onChange={(e) => updateNested('social', 'facebook', e.target.value)} placeholder="https://facebook.com/..." />
+                      </div>
+                    </div>
+                    <div>
+                      <label className={labelClass}>Link do YouTube</label>
+                      <div className="relative">
+                        <Youtube size={18} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                        <input type="url" className={`${inputClass} pl-12`} value={formData.social.youtube || ''} onChange={(e) => updateNested('social', 'youtube', e.target.value)} placeholder="https://youtube.com/..." />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* END NEW SOCIAL MEDIA SECTION */}
 
                 <div className={sectionClass}>
                   <h3 className="text-white font-bold mb-6 border-b border-zinc-800 pb-2">Contato</h3>
