@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-const ADMIN_AUTH_KEY = 'admin_authenticated';
+const ADMIN_AUTH_KEY = 'admin_authenticated'; // Chave consistente
 
 const AdminRouteGuard: React.FC = () => {
   const isAuthenticated = localStorage.getItem(ADMIN_AUTH_KEY) === 'true';

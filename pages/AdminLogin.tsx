@@ -5,7 +5,7 @@ import Button from '../components/Button';
 import { showSuccess, showError } from '../utils/toast';
 
 const ADMIN_PASSWORD = 'a1024003061';
-const ADMIN_AUTH_KEY = 'admin_authenticated';
+const ADMIN_AUTH_KEY = 'admin_authenticated'; // Chave consistente
 
 const AdminLogin: React.FC = () => {
   const [password, setPassword] = useState('');

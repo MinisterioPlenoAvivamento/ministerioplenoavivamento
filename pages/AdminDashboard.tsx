@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useChurchData } from '../context/ChurchContext';
 import Button from '../components/Button';
-import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, Image as ImageIcon, CheckCircle, Flame, X, ExternalLink, MessageCircle, AlertTriangle, RotateCcw, Loader2, Radio, GalleryHorizontal, Music } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, Image as ImageIcon, CheckCircle, Flame, X, ExternalLink, MessageCircle, AlertTriangle, RotateCcw, Loader2, Radio, GalleryHorizontal, Music, LogOut } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import ImageUploader from '../components/ImageUploader'; // Importando o novo componente
+
+const ADMIN_AUTH_KEY = 'admin_authenticated'; // Definindo a chave de autenticação aqui
 
 const AdminDashboard: React.FC = () => {
   const { data, updateData, resetData } = useChurchData();
   const [activeTab, setActiveTab] = useState('general');
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'success' | 'error'>('idle');
   const [formData, setFormData] = useState(data);
+  const navigate = useNavigate();
 
   // Removida dependência [data] para evitar sobrescrita durante digitação
   useEffect(() => {
@@ -57,7 +60,7 @@ const AdminDashboard: React.FC = () => {
             throw new Error("Falha ao gravar no LocalStorage");
         }
     } catch (error) {
-        console.error(error);
+        console.error("CRITICAL SAVE ERROR:", error);
         alert("❌ ERRO: Memória cheia ou falha no navegador. Tente limpar o cache.");
         setSaveStatus('error');
         setTimeout(() => setSaveStatus('idle'), 3000);
@@ -68,6 +71,13 @@ const AdminDashboard: React.FC = () => {
     if (confirm('ATENÇÃO: Restaurar padrão de fábrica? Isso apagará suas edições.')) {
       resetData();
       window.location.reload(); 
+    }
+  };
+  
+  const handleLogout = () => {
+    if (confirm('Tem certeza que deseja sair do painel administrativo?')) {
+      localStorage.removeItem(ADMIN_AUTH_KEY);
+      navigate('/', { replace: true });
     }
   };
 
@@ -137,7 +147,14 @@ const AdminDashboard: React.FC = () => {
               </button>
           ))}
         </nav>
-        <div className="p-4 border-t border-zinc-800">
+        <div className="p-4 border-t border-zinc-800 space-y-3">
+           <button 
+              onClick={handleLogout} 
+              className="w-full flex items-center space-x-2 text-red-400 hover:text-red-300 transition-colors text-sm font-bold bg-zinc-800/50 p-3 rounded-lg"
+           >
+             <LogOut size={16} />
+             <span>Sair (Logout)</span>
+           </button>
            <Link to="/" className="flex items-center space-x-2 text-gray-500 hover:text-white transition-colors text-sm font-bold">
              <ArrowLeft size={16} />
              <span>Voltar ao Site</span>
@@ -159,6 +176,9 @@ const AdminDashboard: React.FC = () => {
                   </div>
                </div>
                <div className="flex items-center gap-3">
+                  <button onClick={handleLogout} className="p-2 text-red-400 hover:text-red-300 bg-zinc-800/50 rounded-full" title="Sair">
+                    <LogOut size={18} />
+                  </button>
                   <button onClick={handleReset} className="p-2 text-gray-400 hover:text-white bg-zinc-800/50 rounded-full" title="Restaurar Padrão">
                     <RotateCcw size={18} />
                   </button>
