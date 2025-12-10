@@ -53,7 +53,7 @@ export interface BankInfo {
   favored: string;
   cnpj: string;
   pixKey: string;
-  pixKeyType: 'CPF' | 'E-mail' | 'Telefone' | 'Aleatória'; // Novo campo
+  pixKeyType: 'CPF' | 'E-mail' | 'Telefone' | 'Aleatória' | 'CNPJ'; // Adicionado 'CNPJ'
   pixCode?: string; // Novo campo para o código PIX completo (BR Code)
 }
 

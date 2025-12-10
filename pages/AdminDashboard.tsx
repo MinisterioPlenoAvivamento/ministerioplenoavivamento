@@ -472,12 +472,13 @@ const AdminDashboard: React.FC = () => {
                         <select
                             className={inputClass}
                             value={formData.bank.pixKeyType}
-                            onChange={(e) => updateNested('bank', 'pixKeyType', e.target.value as 'CPF' | 'E-mail' | 'Telefone' | 'Aleatória')}
+                            onChange={(e) => updateNested('bank', 'pixKeyType', e.target.value as 'CPF' | 'E-mail' | 'Telefone' | 'Aleatória' | 'CNPJ')}
                         >
                             <option value="CPF">CPF</option>
                             <option value="E-mail">E-mail</option>
                             <option value="Telefone">Telefone</option>
                             <option value="Aleatória">Aleatória</option>
+                            <option value="CNPJ">CNPJ</option>
                         </select>
                     </div>
                     
