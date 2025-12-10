@@ -103,8 +103,8 @@ const Live: React.FC = () => {
                     : 'Nossa transmissão está offline no momento. Assista aos cultos anteriores abaixo.'}
                 </p>
                 
-                {/* Social Live Buttons - ADJUSTED FOR MOBILE */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-md px-4">
+                {/* Social Live Buttons - ADJUSTED FOR MOBILE: Stacked vertically */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-sm px-4">
                     <SocialLiveButton 
                         platform="youtube" 
                         url={data.multimedia.liveUrl || data.social.youtube} 
