@@ -51,6 +51,8 @@ export const INITIAL_DATA: ChurchData = {
   `,
   multimedia: {
     liveUrl: "https://youtube.com",
+    facebookLiveUrl: "https://facebook.com/live", // Novo valor inicial
+    instagramLiveUrl: "https://instagram.com/live", // Novo valor inicial
     isLiveNow: true,
     liveTitle: "Culto de Sábado - Ao Vivo",
   },

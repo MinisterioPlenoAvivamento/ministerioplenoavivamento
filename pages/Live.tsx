@@ -122,12 +122,12 @@ const Live: React.FC = () => {
               />
               <SocialLiveButton 
                   platform="facebook" 
-                  url={data.social.facebook} 
+                  url={data.multimedia.facebookLiveUrl || data.social.facebook} 
                   isLive={data.multimedia.isLiveNow} 
               />
               <SocialLiveButton 
                   platform="instagram" 
-                  url={data.social.instagram} 
+                  url={data.multimedia.instagramLiveUrl || data.social.instagram} 
                   isLive={data.multimedia.isLiveNow} 
               />
           </div>

@@ -39,7 +39,9 @@ export interface GalleryImage {
 }
 
 export interface MultimediaConfig {
-  liveUrl: string;
+  liveUrl: string; // YouTube URL
+  facebookLiveUrl?: string; // New: Facebook Live URL
+  instagramLiveUrl?: string; // New: Instagram Live URL
   isLiveNow: boolean;
   liveTitle: string;
 }

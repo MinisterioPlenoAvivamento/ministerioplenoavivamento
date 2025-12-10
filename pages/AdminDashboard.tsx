@@ -508,6 +508,16 @@ const AdminDashboard: React.FC = () => {
                            <label className={labelClass}>Link do YouTube</label>
                            <input type="text" className={inputClass} value={formData.multimedia?.liveUrl || ''} onChange={(e) => updateNested('multimedia', 'liveUrl', e.target.value)} />
                        </div>
+                       
+                       <div>
+                           <label className={labelClass}>Link do Facebook Live</label>
+                           <input type="text" className={inputClass} value={formData.multimedia?.facebookLiveUrl || ''} onChange={(e) => updateNested('multimedia', 'facebookLiveUrl', e.target.value)} />
+                       </div>
+                       
+                       <div>
+                           <label className={labelClass}>Link do Instagram Live</label>
+                           <input type="text" className={inputClass} value={formData.multimedia?.instagramLiveUrl || ''} onChange={(e) => updateNested('multimedia', 'instagramLiveUrl', e.target.value)} />
+                       </div>
                     </div>
                  </div>
                  
