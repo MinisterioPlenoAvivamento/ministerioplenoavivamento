@@ -8,9 +8,10 @@ import Media from './pages/Media';
 import Give from './pages/Give';
 import Contact from './pages/Contact';
 import Live from './pages/Live';
-import WeeklyService from './pages/WeeklyService'; // New Import
+import WeeklyService from './pages/WeeklyService';
 import AdminDashboard from './pages/AdminDashboard';
 import { ChurchProvider } from './context/ChurchContext';
+import BackgroundAudioPlayer from './components/BackgroundAudioPlayer'; // New Import
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -36,15 +37,19 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 }
 
 const App: React.FC = () => {
+  // URL TEMPORÁRIA: Substitua por sua URL de áudio pública (MP3)
+  const AUDIO_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"; 
+
   return (
     <ChurchProvider>
       <Router>
         <ScrollToTop />
+        <BackgroundAudioPlayer audioUrl={AUDIO_URL} />
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/sobre" element={<About />} />
-            <Route path="/cultosemanal" element={<WeeklyService />} /> {/* New Route */}
+            <Route path="/cultosemanal" element={<WeeklyService />} />
             <Route path="/aovivo" element={<Live />} />
             <Route path="/mensagens" element={<Media />} />
             <Route path="/contribuir" element={<Give />} />
