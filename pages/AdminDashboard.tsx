@@ -792,7 +792,6 @@ const AdminDashboard: React.FC = () => {
                                             folder={`gallery/${photo.id}`}
                                             label="Upload da Foto"
                                         />
-                                        {/* REMOVIDO: Campo de Link da Imagem (URL) */}
                                         <div>
                                             <label className={labelClass}>Descrição (Nome do Evento)</label>
                                             <input type="text" className={inputClass} value={photo.alt || ''} onChange={(e) => handleUpdateGallery(photo.id, 'alt', e.target.value)} />

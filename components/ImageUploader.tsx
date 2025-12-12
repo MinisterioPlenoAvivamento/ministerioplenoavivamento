@@ -76,6 +76,13 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadSuccess, currentI
     <div className="space-y-3 p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
       <label className="block text-xs font-bold text-gray-400 uppercase tracking-wide ml-1">{label}</label>
       
+      {/* Pré-visualização da imagem atual (se houver) */}
+      {currentImageUrl && !file && (
+        <div className="w-full h-32 bg-black rounded-lg overflow-hidden border border-zinc-700 flex-shrink-0 mb-3">
+          <img src={currentImageUrl} alt="Pré-visualização" className="w-full h-full object-cover opacity-70" />
+        </div>
+      )}
+
       <div className="flex items-center gap-3">
         <input
           type="file"
