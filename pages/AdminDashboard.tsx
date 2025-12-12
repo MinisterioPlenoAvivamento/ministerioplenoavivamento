@@ -50,7 +50,7 @@ const AdminDashboard: React.FC = () => {
             // 4. MUDANÇA VISUAL PARA SUCESSO (VERDE)
             setSaveStatus('success');
             
-            // 5. ESPERA 1.5 SEGUNDOS PARA O USUÁRIO VER O VERDE
+            // 5. ESPERA 1.5 SEGUNDOS PARA O USUÁRIO VEJA O VERDE
             await new Promise(resolve => setTimeout(resolve, 1500));
 
             alert('✅ DADOS SALVOS COM SUCESSO!\n\nA página será recarregada para confirmar a atualização.');
