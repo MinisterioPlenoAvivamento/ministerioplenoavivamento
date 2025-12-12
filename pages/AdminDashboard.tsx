@@ -792,12 +792,9 @@ const AdminDashboard: React.FC = () => {
                                             folder={`gallery/${photo.id}`}
                                             label="Upload da Foto"
                                         />
-                                        <div className="mt-4">
-                                            <label className={labelClass}>Link da Imagem (URL)</label>
-                                            <input type="text" className={inputClass} value={photo.url || ''} onChange={(e) => handleUpdateGallery(photo.id, 'url', e.target.value)} />
-                                        </div>
+                                        {/* REMOVIDO: Campo de Link da Imagem (URL) */}
                                         <div>
-                                            <label className={labelClass}>Descrição (Alt Text)</label>
+                                            <label className={labelClass}>Descrição (Nome do Evento)</label>
                                             <input type="text" className={inputClass} value={photo.alt || ''} onChange={(e) => handleUpdateGallery(photo.id, 'alt', e.target.value)} />
                                         </div>
                                     </div>
