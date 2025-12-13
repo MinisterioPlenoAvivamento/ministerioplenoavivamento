@@ -82,7 +82,7 @@ const GalleryUploader: React.FC<GalleryUploaderProps> = ({ onNewImageAdded }) =>
       
       <input
         type="file"
-        accept=".jpg, .jpeg, .png" // Restringindo para formatos comuns de compartilhamento
+        accept=".jpg, .jpeg, .png, .webp, .heic" // Adicionado WEBP e HEIC
         onChange={handleFileChange}
         className="hidden"
         id="gallery-file-upload"
@@ -114,7 +114,8 @@ const GalleryUploader: React.FC<GalleryUploaderProps> = ({ onNewImageAdded }) =>
       {file && !isUploading && (
         <p className="text-xs text-gray-500 mt-2">Clique em "Fazer Upload" para enviar a foto ao servidor.</p>
       )}
-      <p className="text-[10px] text-gray-600 mt-2">Formatos recomendados para compartilhamento: JPG, JPEG, PNG.</p>
+      <p className="text-[10px] text-gray-600 mt-2">Formatos aceitos: JPG, JPEG, PNG, WEBP, HEIC.</p>
+      <p className="text-[10px] text-church-red font-bold">Se o erro persistir, por favor, use um compressor online para reduzir o tamanho do arquivo (idealmente abaixo de 1MB).</p>
     </div>
   );
 };
