@@ -45,12 +45,8 @@ const GalleryUploader: React.FC<GalleryUploaderProps> = ({ onNewImageAdded }) =>
         // 1. Extrai a extensão
         const fileExt = file.name.split('.').pop();
         
-        // 2. Sanitiza o nome base (remove tudo que não for letra/número/hífen/underscore)
-        const baseName = file.name.split('.').slice(0, -1).join('.');
-        const sanitizedBaseName = baseName.replace(/[^a-z0-9-_]/gi, '').toLowerCase();
-        
-        // 3. Cria o caminho final
-        const fileName = `gallery/${Date.now()}-${i}-${sanitizedBaseName}.${fileExt}`;
+        // 2. CRIA NOME SEGURO: Apenas timestamp e índice para evitar problemas com caracteres especiais
+        const fileName = `gallery/${Date.now()}-${i}.${fileExt}`;
         
         const { error } = await supabase.storage
           .from('images')
@@ -61,6 +57,7 @@ const GalleryUploader: React.FC<GalleryUploaderProps> = ({ onNewImageAdded }) =>
 
         if (error) {
           showError(`Falha ao enviar ${file.name}: ${error.message}`);
+          console.error(`Supabase Upload Error for ${file.name}:`, error);
           continue;
         }
 
@@ -73,7 +70,8 @@ const GalleryUploader: React.FC<GalleryUploaderProps> = ({ onNewImageAdded }) =>
           const newImage: GalleryImage = {
             id: Date.now().toString() + i,
             url: publicUrlData.publicUrl,
-            alt: baseName || 'Foto da Galeria',
+            // Mantém o nome original para o 'alt' (descrição)
+            alt: file.name.split('.').slice(0, -1).join('.') || 'Foto da Galeria',
           };
           onNewImageAdded(newImage);
           successfulUploads++;
