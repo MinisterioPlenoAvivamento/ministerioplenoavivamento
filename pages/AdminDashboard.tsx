@@ -5,7 +5,8 @@ import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, I
 import { Link, useNavigate } from 'react-router-dom';
 import ImageUploader, { deleteImageByUrl } from '../components/ImageUploader'; // Importando deleteImageByUrl
 import ContactMessagesManager from '../components/ContactMessagesManager'; // Importando o novo componente
-import GalleryUploader from '../components/GalleryUploader'; // NOVO: Importando o GalleryUploader
+import GalleryUploader from '../components/GalleryUploader'; // Importando o GalleryUploader
+import UrlGalleryAdder from '../components/UrlGalleryAdder'; // NOVO: Importando o UrlGalleryAdder
 import { showSuccess, showError, showLoading, dismissToast } from '../utils/toast'; // Importando showError e showLoading
 
 const ADMIN_AUTH_KEY = 'admin_authenticated'; // Definindo a chave de autenticação aqui
@@ -99,13 +100,15 @@ const AdminDashboard: React.FC = () => {
 
     try {
       if (section === 'gallery' && itemToDelete && 'url' in itemToDelete) {
-        // 1. Tenta deletar do Supabase Storage
-        const success = await deleteImageByUrl(itemToDelete.url);
-        if (!success) {
-          // Se falhar, avisa, mas permite a exclusão local para não travar o painel
-          showError('Falha ao apagar arquivo do servidor. Removendo apenas o registro local.');
-        } else {
-          showSuccess('Arquivo do servidor apagado.');
+        // 1. Tenta deletar do Supabase Storage (Apenas se a URL não for externa)
+        if (itemToDelete.url && itemToDelete.url.includes('supabase.co/storage')) {
+            const success = await deleteImageByUrl(itemToDelete.url);
+            if (!success) {
+              // Se falhar, avisa, mas permite a exclusão local para não travar o painel
+              showError('Falha ao apagar arquivo do servidor. Removendo apenas o registro local.');
+            } else {
+              showSuccess('Arquivo do servidor apagado.');
+            }
         }
       }
       
@@ -797,11 +800,13 @@ const AdminDashboard: React.FC = () => {
                  <div>
                     <div className="flex justify-between items-center mb-4 sticky top-14 bg-black z-30 py-4 border-b border-zinc-900">
                         <h3 className="text-lg font-bold text-white uppercase flex items-center gap-2"><GalleryHorizontal size={18} /> Galeria de Fotos</h3>
-                        {/* NOVO: Removido o botão de adicionar manual, substituído pelo GalleryUploader */}
                     </div>
                     
-                    {/* NOVO: Componente de Upload Simplificado */}
-                    <GalleryUploader onNewImageAdded={handleNewImageAdded} />
+                    {/* NOVO: Componentes de Adição */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <GalleryUploader onNewImageAdded={handleNewImageAdded} />
+                        <UrlGalleryAdder onNewImageAdded={handleNewImageAdded} />
+                    </div>
 
                     <div className="space-y-6 mt-8">
                         {(formData.gallery || []).map((photo) => (
