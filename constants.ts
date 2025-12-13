@@ -6,7 +6,6 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'Culto Semanal', path: '/cultosemanal' }, // New item
   { label: 'Ao Vivo', path: '/aovivo' },
   { label: 'Mensagens', path: '/mensagens' },
-  { label: 'Galeria de Fotos', path: '/galeria' }, // Novo item de navegação
   { label: 'Contribuir', path: '/contribuir' },
   { label: 'Contato', path: '/contato' },
 ];
@@ -103,5 +102,5 @@ export const INITIAL_DATA: ChurchData = {
       tag: 'Conferência'
     }
   ],
-  gallery: [] // Galeria de fotos removida
+  gallery: []
 };
