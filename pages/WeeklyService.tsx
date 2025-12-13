@@ -3,7 +3,6 @@ import { useChurchData } from '../context/ChurchContext';
 import { Calendar, Clock, MapPin, Flame, ArrowRight } from 'lucide-react';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
-import PhotoGallery from '../components/PhotoGallery';
 
 const WeeklyService: React.FC = () => {
   const { data } = useChurchData();
@@ -78,10 +77,12 @@ const WeeklyService: React.FC = () => {
             </div>
           </div>
 
-          {/* Sidebar - Photo Gallery */}
+          {/* Sidebar - Photo Gallery (REMOVED) */}
           <div className="lg:col-span-1 space-y-8">
             <div className="bg-zinc-900 rounded-2xl shadow-lg p-6 border border-white/5">
-              <PhotoGallery images={data.gallery} />
+              <div className="text-center py-10 text-gray-500">
+                <p>Conteúdo da Galeria removido.</p>
+              </div>
             </div>
           </div>
         </div>
