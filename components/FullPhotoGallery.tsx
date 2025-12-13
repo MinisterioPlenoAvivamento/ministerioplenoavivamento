@@ -1,6 +1,6 @@
 import React from 'react';
 import { GalleryImage } from '../types';
-import { Image as ImageIcon } from 'lucide-react';
+import { Image as ImageIcon, Download, Eye } from 'lucide-react';
 
 interface FullPhotoGalleryProps {
   images: GalleryImage[];
@@ -19,19 +19,31 @@ const FullPhotoGallery: React.FC<FullPhotoGalleryProps> = ({ images }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {images.map((image) => (
-        <div key={image.id} className="bg-zinc-900 rounded-xl overflow-hidden shadow-lg border border-white/5 group">
-          <div className="aspect-[4/3] overflow-hidden">
+        <a 
+          key={image.id} 
+          href={image.url} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="bg-zinc-900 rounded-xl overflow-hidden shadow-lg border border-white/5 group block transition-all duration-300 hover:border-church-red/50 hover:shadow-red-900/20"
+        >
+          <div className="aspect-[4/3] overflow-hidden relative">
             <img 
               src={image.url} 
               alt={image.alt} 
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
             />
+            {/* Overlay de Ação */}
+            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+               <div className="flex items-center gap-3 bg-church-red text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
+                  <Eye size={18} /> Visualizar
+               </div>
+            </div>
           </div>
           <div className="p-4">
-            <p className="text-xs text-gray-500 uppercase font-bold mb-1">Nome do Evento</p>
+            <p className="text-xs text-gray-500 uppercase font-bold mb-1">Foto da Galeria</p>
             <h3 className="text-white font-bold text-lg line-clamp-2">{image.alt || 'Sem nome de evento'}</h3>
           </div>
-        </div>
+        </a>
       ))}
     </div>
   );
