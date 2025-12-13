@@ -45,7 +45,7 @@ const FullPhotoGallery: React.FC<FullPhotoGalleryProps> = ({ images }) => {
                <a 
                   href={image.url} 
                   download={image.alt.replace(/\s/g, '_') + '.jpg'} // Nome do arquivo para download
-                  title="Baixar Foto"
+                  title="Baixar para Compartilhar"
                   className="p-3 bg-white text-church-black rounded-full shadow-lg hover:bg-gray-200 transition-colors"
                >
                   <Download size={20} />
