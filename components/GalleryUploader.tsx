@@ -34,20 +34,23 @@ const GalleryUploader: React.FC<GalleryUploaderProps> = ({ onNewImageAdded }) =>
     const totalFiles = files.length;
     let successfulUploads = 0;
     
-    // 1. Cria um único toast de carregamento
     const toastId = showLoading(`Iniciando upload de ${totalFiles} arquivo(s)...`);
 
     try {
       for (let i = 0; i < totalFiles; i++) {
         const file = files[i];
         
-        // Atualiza o toast com o progresso atual
         showLoading(`Enviando: ${file.name} (${i + 1}/${totalFiles})`, toastId);
 
+        // 1. Extrai a extensão
         const fileExt = file.name.split('.').pop();
-        // Cria um nome de arquivo único e seguro
-        const safeFileName = file.name.replace(/[^a-z0-9.]/gi, '_').toLowerCase();
-        const fileName = `gallery/${Date.now()}-${i}-${safeFileName}`;
+        
+        // 2. Sanitiza o nome base (remove tudo que não for letra/número/hífen/underscore)
+        const baseName = file.name.split('.').slice(0, -1).join('.');
+        const sanitizedBaseName = baseName.replace(/[^a-z0-9-_]/gi, '').toLowerCase();
+        
+        // 3. Cria o caminho final
+        const fileName = `gallery/${Date.now()}-${i}-${sanitizedBaseName}.${fileExt}`;
         
         const { error } = await supabase.storage
           .from('images')
@@ -68,9 +71,9 @@ const GalleryUploader: React.FC<GalleryUploaderProps> = ({ onNewImageAdded }) =>
 
         if (publicUrlData.publicUrl) {
           const newImage: GalleryImage = {
-            id: Date.now().toString() + i, // Garante ID único
+            id: Date.now().toString() + i,
             url: publicUrlData.publicUrl,
-            alt: file.name.split('.').slice(0, -1).join('.') || 'Foto da Galeria',
+            alt: baseName || 'Foto da Galeria',
           };
           onNewImageAdded(newImage);
           successfulUploads++;
@@ -83,7 +86,7 @@ const GalleryUploader: React.FC<GalleryUploaderProps> = ({ onNewImageAdded }) =>
       } else {
         showError('Nenhuma imagem foi enviada com sucesso.');
       }
-      setFiles([]); // Limpa a lista de arquivos
+      setFiles([]);
 
     } catch (error: any) {
       dismissToast(toastId);
