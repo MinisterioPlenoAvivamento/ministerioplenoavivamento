@@ -82,7 +82,7 @@ const GalleryUploader: React.FC<GalleryUploaderProps> = ({ onNewImageAdded }) =>
       
       <input
         type="file"
-        accept="image/*"
+        accept=".jpg, .jpeg, .png" // Restringindo para formatos comuns de compartilhamento
         onChange={handleFileChange}
         className="hidden"
         id="gallery-file-upload"
@@ -114,6 +114,7 @@ const GalleryUploader: React.FC<GalleryUploaderProps> = ({ onNewImageAdded }) =>
       {file && !isUploading && (
         <p className="text-xs text-gray-500 mt-2">Clique em "Fazer Upload" para enviar a foto ao servidor.</p>
       )}
+      <p className="text-[10px] text-gray-600 mt-2">Formatos recomendados para compartilhamento: JPG, JPEG, PNG.</p>
     </div>
   );
 };
