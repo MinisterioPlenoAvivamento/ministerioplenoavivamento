@@ -3,9 +3,9 @@ import { useChurchData } from '../context/ChurchContext';
 import Button from '../components/Button';
 import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, Image as ImageIcon, CheckCircle, Flame, X, ExternalLink, MessageCircle, AlertTriangle, RotateCcw, Loader2, Radio, GalleryHorizontal, Music, LogOut, Mail, Instagram, Facebook, Youtube } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import ImageUploader from '../components/ImageUploader';
+import ImageUploader, { deleteImageByUrl } from '../components/ImageUploader'; // Importando deleteImageByUrl
 import ContactMessagesManager from '../components/ContactMessagesManager'; // Importando o novo componente
-import { showSuccess } from '../utils/toast'; // Importando showSuccess
+import { showSuccess, showError, showLoading, dismissToast } from '../utils/toast'; // Importando showError e showLoading
 
 const ADMIN_AUTH_KEY = 'admin_authenticated'; // Definindo a chave de autenticação aqui
 
@@ -90,14 +90,38 @@ const AdminDashboard: React.FC = () => {
     }));
   };
 
-  const handleDeleteItem = (section: 'sermons' | 'gallery' | 'services' | 'events', id: string) => {
-    if (window.confirm('Apagar item?')) {
+  const handleDeleteItem = async (section: 'sermons' | 'gallery' | 'services' | 'events', id: string) => {
+    if (!window.confirm('Tem certeza que deseja apagar este item?')) return;
+
+    const itemToDelete = (formData[section] || []).find(item => String(item.id) === String(id));
+    const toastId = showLoading('Excluindo item...');
+
+    try {
+      if (section === 'gallery' && itemToDelete && 'url' in itemToDelete) {
+        // 1. Tenta deletar do Supabase Storage
+        const success = await deleteImageByUrl(itemToDelete.url);
+        if (!success) {
+          // Se falhar, avisa, mas permite a exclusão local para não travar o painel
+          showError('Falha ao apagar arquivo do servidor. Removendo apenas o registro local.');
+        } else {
+          showSuccess('Arquivo do servidor apagado.');
+        }
+      }
+      
+      // 2. Remove do estado local
       setFormData(prev => ({
         ...prev,
         [section]: (prev[section] || []).filter(item => String(item.id) !== String(id))
       }));
-      showSuccess('Item removido localmente. Clique em SALVAR para confirmar.');
+      
+      dismissToast(toastId);
+      showSuccess('Item removido localmente. Clique em SALVAR para confirmar a alteração.');
       setSaveStatus('idle'); // Garante que o botão de salvar fique visível
+
+    } catch (error) {
+      dismissToast(toastId);
+      showError('Erro ao tentar excluir o item.');
+      console.error(error);
     }
   };
 

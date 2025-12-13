@@ -10,6 +10,40 @@ interface ImageUploaderProps {
   label: string;
 }
 
+// Função utilitária para extrair o caminho do arquivo do URL público do Supabase
+const getFilePathFromUrl = (url: string): string | null => {
+  // Exemplo de URL: https://[project_id].supabase.co/storage/v1/object/public/images/gallery/1700000000000.jpg
+  const parts = url.split('/storage/v1/object/public/images/');
+  if (parts.length > 1) {
+    return parts[1];
+  }
+  return null;
+};
+
+/**
+ * Deleta um arquivo do bucket 'images' do Supabase Storage usando sua URL pública.
+ * @param url URL pública da imagem.
+ */
+export const deleteImageByUrl = async (url: string): Promise<boolean> => {
+  const filePath = getFilePathFromUrl(url);
+  
+  if (!filePath) {
+    console.warn("Não foi possível extrair o caminho do arquivo do URL:", url);
+    return false;
+  }
+
+  const { error } = await supabase.storage
+    .from('images')
+    .remove([filePath]);
+
+  if (error) {
+    console.error("Erro ao deletar arquivo do Supabase Storage:", error);
+    return false;
+  }
+  return true;
+};
+
+
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadSuccess, currentImageUrl, folder, label }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
