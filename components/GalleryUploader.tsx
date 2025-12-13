@@ -3,6 +3,7 @@ import { Upload, Loader2, Image as ImageIcon, X } from 'lucide-react';
 import { supabase } from '../integrations/supabase/client';
 import { showLoading, showSuccess, showError, dismissToast } from '../utils/toast';
 import { GalleryImage } from '../types';
+import Button from './Button'; // Adicionado o import do Button
 
 interface GalleryUploaderProps {
   onNewImageAdded: (newImage: GalleryImage) => void;
