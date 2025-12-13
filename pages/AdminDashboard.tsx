@@ -5,6 +5,8 @@ import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, I
 import { Link, useNavigate } from 'react-router-dom';
 import ImageUploader, { deleteImageByUrl } from '../components/ImageUploader'; // Importando deleteImageByUrl
 import ContactMessagesManager from '../components/ContactMessagesManager'; // Importando o novo componente
+import GalleryUploader from '../components/GalleryUploader'; // NOVO: Importando GalleryUploader
+import UrlGalleryAdder from '../components/UrlGalleryAdder'; // NOVO: Importando UrlGalleryAdder
 import { showSuccess, showError, showLoading, dismissToast } from '../utils/toast'; // Importando showError e showLoading
 
 const ADMIN_AUTH_KEY = 'admin_authenticated'; // Definindo a chave de autenticação aqui
@@ -90,13 +92,27 @@ const AdminDashboard: React.FC = () => {
     }));
   };
 
-  const handleDeleteItem = async (section: 'sermons' | 'services' | 'events', id: string) => {
+  const handleDeleteItem = async (section: 'sermons' | 'gallery' | 'services' | 'events', id: string) => {
     if (!window.confirm('Tem certeza que deseja apagar este item?')) return;
 
+    const itemToDelete = (formData[section] || []).find(item => String(item.id) === String(id));
     const toastId = showLoading('Excluindo item...');
 
     try {
-      // 1. Remove do estado local
+      if (section === 'gallery' && itemToDelete && 'url' in itemToDelete) {
+        // 1. Tenta deletar do Supabase Storage (Apenas se a URL não for externa)
+        if (itemToDelete.url && itemToDelete.url.includes('supabase.co/storage')) {
+            const success = await deleteImageByUrl(itemToDelete.url);
+            if (!success) {
+              // Se falhar, avisa, mas permite a exclusão local para não travar o painel
+              showError('Falha ao apagar arquivo do servidor. Removendo apenas o registro local.');
+            } else {
+              showSuccess('Arquivo do servidor apagado.');
+            }
+        }
+      }
+      
+      // 2. Remove do estado local
       setFormData(prev => ({
         ...prev,
         [section]: (prev[section] || []).filter(item => String(item.id) !== String(id))
@@ -120,6 +136,13 @@ const AdminDashboard: React.FC = () => {
     }));
   };
   
+  const handleUpdateGallery = (id: string, field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      gallery: prev.gallery.map((item) => String(item.id) === String(id) ? { ...item, [field]: value } : item)
+    }));
+  };
+  
   const handleUpdateService = (id: string, field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
@@ -134,6 +157,13 @@ const AdminDashboard: React.FC = () => {
     }));
   };
   
+  const handleNewImageAdded = (newImage: any) => {
+    setFormData(prev => ({
+      ...prev,
+      gallery: [...(prev.gallery || []), newImage]
+    }));
+  };
+
   // Styles optimized for touch/mobile
   const inputClass = "w-full p-4 bg-zinc-900 border border-zinc-700 rounded-xl text-white text-base focus:ring-2 focus:ring-church-red focus:border-church-red outline-none transition-all placeholder-zinc-600";
   const labelClass = "block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wide ml-1";
@@ -157,6 +187,7 @@ const AdminDashboard: React.FC = () => {
             { id: 'history', icon: FileText, label: 'História & Textos' },
             { id: 'financial', icon: DollarSign, label: 'Financeiro' },
             { id: 'sermons', icon: Video, label: 'Mídia & Cultos' },
+            { id: 'gallery', icon: GalleryHorizontal, label: 'Galeria de Fotos' },
             { id: 'messages', icon: Mail, label: 'Mensagens de Contato' }
           ].map((item) => (
              <button 
@@ -218,6 +249,7 @@ const AdminDashboard: React.FC = () => {
                 { id: 'history', label: 'História' },
                 { id: 'financial', label: 'Financeiro' },
                 { id: 'sermons', label: 'Mídia' },
+                { id: 'gallery', label: 'Galeria' },
                 { id: 'messages', label: 'Mensagens' }
               ].map((item) => (
                  <button 
@@ -241,6 +273,7 @@ const AdminDashboard: React.FC = () => {
                 {activeTab === 'history' && 'Conteúdo Institucional'}
                 {activeTab === 'financial' && 'Dados Bancários'}
                 {activeTab === 'sermons' && 'Central de Mídia'}
+                {activeTab === 'gallery' && 'Galeria de Fotos'}
                 {activeTab === 'messages' && 'Mensagens de Contato'}
               </h1>
               <div className="flex gap-3">
@@ -750,6 +783,53 @@ const AdminDashboard: React.FC = () => {
                                 <button 
                                     type="button" 
                                     onClick={() => handleDeleteItem('sermons', sermon.id)} 
+                                    className="absolute -top-2 -right-2 bg-red-600 text-white p-2 rounded-full shadow-lg hover:scale-110 transition-transform z-10"
+                                >
+                                    <Trash2 size={20} />
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                 </div>
+              </div>
+            )}
+            
+            {/* --- GALLERY TAB --- */}
+            {activeTab === 'gallery' && (
+              <div className="space-y-8">
+                 <div>
+                    <div className="flex justify-between items-center mb-4 sticky top-14 bg-black z-30 py-4 border-b border-zinc-900">
+                        <h3 className="text-lg font-bold text-white uppercase flex items-center gap-2"><GalleryHorizontal size={18} /> Galeria de Fotos</h3>
+                    </div>
+                    
+                    {/* Componentes de Adição */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <GalleryUploader onNewImageAdded={handleNewImageAdded} />
+                        <UrlGalleryAdder onNewImageAdded={handleNewImageAdded} />
+                    </div>
+
+                    <div className="space-y-6 mt-8">
+                        {(formData.gallery || []).map((photo) => (
+                            <div key={photo.id} className="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl flex flex-col gap-4 shadow-lg relative">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-24 h-24 bg-black rounded-lg overflow-hidden border border-zinc-700 flex-shrink-0">
+                                        <img src={photo.url} alt={photo.alt} className="w-full h-full object-cover" />
+                                    </div>
+                                    <div className="flex-1 min-w-0 space-y-3">
+                                        <div>
+                                            <label className={labelClass}>Link da Imagem (URL)</label>
+                                            <input type="text" className={inputClass} value={photo.url || ''} onChange={(e) => handleUpdateGallery(photo.id, 'url', e.target.value)} />
+                                        </div>
+                                        <div>
+                                            <label className={labelClass}>Descrição (Nome do Evento)</label>
+                                            <input type="text" className={inputClass} value={photo.alt || ''} onChange={(e) => handleUpdateGallery(photo.id, 'alt', e.target.value)} />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button 
+                                    type="button" 
+                                    onClick={() => handleDeleteItem('gallery', photo.id)} 
                                     className="absolute -top-2 -right-2 bg-red-600 text-white p-2 rounded-full shadow-lg hover:scale-110 transition-transform z-10"
                                 >
                                     <Trash2 size={20} />

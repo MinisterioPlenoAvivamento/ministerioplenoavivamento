@@ -9,6 +9,7 @@ import Give from './pages/Give';
 import Contact from './pages/Contact';
 import Live from './pages/Live';
 import WeeklyService from './pages/WeeklyService';
+import Gallery from './pages/Gallery'; // Importando a Galeria
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
 import AdminRouteGuard from './components/AdminRouteGuard';
@@ -55,6 +56,7 @@ const AppContent: React.FC = () => {
           <Route path="/cultosemanal" element={<WeeklyService />} />
           <Route path="/aovivo" element={<Live />} />
           <Route path="/mensagens" element={<Media />} />
+          <Route path="/galeria" element={<Gallery />} /> {/* Rota da Galeria */}
           <Route path="/contribuir" element={<Give />} />
           <Route path="/contato" element={<Contact />} />
           
