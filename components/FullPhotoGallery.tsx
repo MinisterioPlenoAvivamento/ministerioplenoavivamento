@@ -19,11 +19,8 @@ const FullPhotoGallery: React.FC<FullPhotoGalleryProps> = ({ images }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {images.map((image) => (
-        <a 
+        <div 
           key={image.id} 
-          href={image.url} 
-          target="_blank" 
-          rel="noopener noreferrer"
           className="bg-zinc-900 rounded-xl overflow-hidden shadow-lg border border-white/5 group block transition-all duration-300 hover:border-church-red/50 hover:shadow-red-900/20"
         >
           <div className="aspect-[4/3] overflow-hidden relative">
@@ -33,17 +30,33 @@ const FullPhotoGallery: React.FC<FullPhotoGalleryProps> = ({ images }) => {
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100"
             />
             {/* Overlay de Ação */}
-            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-               <div className="flex items-center gap-3 bg-church-red text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
-                  <Eye size={18} /> Visualizar
-               </div>
+            <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-4">
+               {/* Botão de Visualizar (Abre em nova aba) */}
+               <a 
+                  href={image.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  title="Visualizar em tela cheia"
+                  className="p-3 bg-church-red text-white rounded-full shadow-lg hover:bg-red-600 transition-colors"
+               >
+                  <Eye size={20} />
+               </a>
+               {/* Botão de Download (Força o download) */}
+               <a 
+                  href={image.url} 
+                  download={image.alt.replace(/\s/g, '_') + '.jpg'} // Nome do arquivo para download
+                  title="Baixar Foto"
+                  className="p-3 bg-white text-church-black rounded-full shadow-lg hover:bg-gray-200 transition-colors"
+               >
+                  <Download size={20} />
+               </a>
             </div>
           </div>
           <div className="p-4">
             <p className="text-xs text-gray-500 uppercase font-bold mb-1">Foto da Galeria</p>
             <h3 className="text-white font-bold text-lg line-clamp-2">{image.alt || 'Sem nome de evento'}</h3>
           </div>
-        </a>
+        </div>
       ))}
     </div>
   );

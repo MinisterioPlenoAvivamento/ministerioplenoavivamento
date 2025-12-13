@@ -5,6 +5,7 @@ import { Save, Video, DollarSign, FileText, Settings, Plus, Trash2, ArrowLeft, I
 import { Link, useNavigate } from 'react-router-dom';
 import ImageUploader, { deleteImageByUrl } from '../components/ImageUploader'; // Importando deleteImageByUrl
 import ContactMessagesManager from '../components/ContactMessagesManager'; // Importando o novo componente
+import GalleryUploader from '../components/GalleryUploader'; // NOVO: Importando o GalleryUploader
 import { showSuccess, showError, showLoading, dismissToast } from '../utils/toast'; // Importando showError e showLoading
 
 const ADMIN_AUTH_KEY = 'admin_authenticated'; // Definindo a chave de autenticação aqui
@@ -150,6 +151,13 @@ const AdminDashboard: React.FC = () => {
     setFormData(prev => ({
       ...prev,
       events: prev.events.map((item) => String(item.id) === String(id) ? { ...item, [field]: value } : item)
+    }));
+  };
+  
+  const handleNewImageAdded = (newImage: any) => {
+    setFormData(prev => ({
+      ...prev,
+      gallery: [...(prev.gallery || []), newImage]
     }));
   };
 
@@ -789,20 +797,13 @@ const AdminDashboard: React.FC = () => {
                  <div>
                     <div className="flex justify-between items-center mb-4 sticky top-14 bg-black z-30 py-4 border-b border-zinc-900">
                         <h3 className="text-lg font-bold text-white uppercase flex items-center gap-2"><GalleryHorizontal size={18} /> Galeria de Fotos</h3>
-                        <Button 
-                            type="button"
-                            variant="white"
-                            className="px-6 py-2 text-xs h-10"
-                            onClick={() => setFormData(prev => ({
-                            ...prev,
-                            gallery: [...(prev.gallery || []), { id: Date.now().toString(), url: 'https://picsum.photos/600/400', alt: 'Nova Foto' }]
-                            }))}
-                        >
-                            <Plus size={16} className="mr-1" /> Adicionar Foto
-                        </Button>
+                        {/* NOVO: Removido o botão de adicionar manual, substituído pelo GalleryUploader */}
                     </div>
+                    
+                    {/* NOVO: Componente de Upload Simplificado */}
+                    <GalleryUploader onNewImageAdded={handleNewImageAdded} />
 
-                    <div className="space-y-6">
+                    <div className="space-y-6 mt-8">
                         {(formData.gallery || []).map((photo) => (
                             <div key={photo.id} className="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl flex flex-col gap-4 shadow-lg relative">
                                 <div className="flex items-start gap-4">
@@ -810,12 +811,11 @@ const AdminDashboard: React.FC = () => {
                                         <img src={photo.url} alt={photo.alt} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="flex-1 min-w-0 space-y-3">
-                                        <ImageUploader
-                                            onUploadSuccess={(url) => handleUpdateGallery(photo.id, 'url', url)}
-                                            currentImageUrl={photo.url}
-                                            folder={`gallery/${photo.id}`}
-                                            label="Upload da Foto"
-                                        />
+                                        {/* Removido ImageUploader interno, pois o upload é feito pelo componente GalleryUploader */}
+                                        <div>
+                                            <label className={labelClass}>Link da Imagem (URL)</label>
+                                            <input type="text" className={inputClass} value={photo.url || ''} onChange={(e) => handleUpdateGallery(photo.id, 'url', e.target.value)} />
+                                        </div>
                                         <div>
                                             <label className={labelClass}>Descrição (Nome do Evento)</label>
                                             <input type="text" className={inputClass} value={photo.alt || ''} onChange={(e) => handleUpdateGallery(photo.id, 'alt', e.target.value)} />
