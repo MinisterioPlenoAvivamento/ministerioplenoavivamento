@@ -8,7 +8,12 @@ export const showError = (message: string) => {
   toast.error(message);
 };
 
-export const showLoading = (message: string) => {
+export const showLoading = (message: string, toastId?: string) => {
+  // Se um toastId for fornecido, atualiza o toast existente. Caso contrário, cria um novo.
+  if (toastId) {
+    toast.loading(message, { id: toastId });
+    return toastId;
+  }
   return toast.loading(message);
 };
 

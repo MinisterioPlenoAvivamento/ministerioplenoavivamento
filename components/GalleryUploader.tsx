@@ -3,7 +3,7 @@ import { Upload, Loader2, Image as ImageIcon, X } from 'lucide-react';
 import { supabase } from '../integrations/supabase/client';
 import { showLoading, showSuccess, showError, dismissToast } from '../utils/toast';
 import { GalleryImage } from '../types';
-import Button from './Button'; // Adicionado o import do Button
+import Button from './Button';
 
 interface GalleryUploaderProps {
   onNewImageAdded: (newImage: GalleryImage) => void;
@@ -33,16 +33,22 @@ const GalleryUploader: React.FC<GalleryUploaderProps> = ({ onNewImageAdded }) =>
     setIsUploading(true);
     const totalFiles = files.length;
     let successfulUploads = 0;
+    
+    // 1. Cria um único toast de carregamento
     const toastId = showLoading(`Iniciando upload de ${totalFiles} arquivo(s)...`);
 
     try {
-      for (const file of files) {
-        const fileExt = file.name.split('.').pop();
-        const fileName = `gallery/${Date.now()}-${file.name.replace(/[^a-z0-9.]/gi, '_').toLowerCase()}`;
+      for (let i = 0; i < totalFiles; i++) {
+        const file = files[i];
         
-        dismissToast(toastId);
-        const currentToastId = showLoading(`Enviando: ${file.name} (${successfulUploads + 1}/${totalFiles})`);
+        // Atualiza o toast com o progresso atual
+        showLoading(`Enviando: ${file.name} (${i + 1}/${totalFiles})`, toastId);
 
+        const fileExt = file.name.split('.').pop();
+        // Cria um nome de arquivo único e seguro
+        const safeFileName = file.name.replace(/[^a-z0-9.]/gi, '_').toLowerCase();
+        const fileName = `gallery/${Date.now()}-${i}-${safeFileName}`;
+        
         const { error } = await supabase.storage
           .from('images')
           .upload(fileName, file, {
@@ -62,14 +68,13 @@ const GalleryUploader: React.FC<GalleryUploaderProps> = ({ onNewImageAdded }) =>
 
         if (publicUrlData.publicUrl) {
           const newImage: GalleryImage = {
-            id: Date.now().toString() + successfulUploads, // Garante ID único
+            id: Date.now().toString() + i, // Garante ID único
             url: publicUrlData.publicUrl,
             alt: file.name.split('.').slice(0, -1).join('.') || 'Foto da Galeria',
           };
           onNewImageAdded(newImage);
           successfulUploads++;
         }
-        dismissToast(currentToastId);
       }
 
       dismissToast(toastId);
