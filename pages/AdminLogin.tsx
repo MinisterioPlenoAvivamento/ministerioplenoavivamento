@@ -4,7 +4,7 @@ import { Lock, Flame, LogIn, AlertTriangle, Eye, EyeOff } from 'lucide-react';
 import Button from '../components/Button';
 import { showSuccess, showError } from '../utils/toast';
 
-const ADMIN_PASSWORD = 'Villares07oi'; // Senha atualizada
+const ADMIN_PASSWORD = '12345'; // Senha atualizada
 const ADMIN_AUTH_KEY = 'admin_authenticated'; // Chave consistente
 
 const AdminLogin: React.FC = () => {
