@@ -113,14 +113,23 @@ const AdminDashboard: React.FC = () => {
       }
       
       // 2. Remove do estado local
+      const updatedList = (formData[section] || []).filter(item => String(item.id) !== String(id));
+      
       setFormData(prev => ({
         ...prev,
-        [section]: (prev[section] || []).filter(item => String(item.id) !== String(id))
+        [section]: updatedList
       }));
       
-      dismissToast(toastId);
-      showSuccess('Item removido localmente. Clique em SALVAR para confirmar a alteração.');
-      setSaveStatus('idle'); // Garante que o botão de salvar fique visível
+      // 3. Salva imediatamente no localStorage se for a galeria
+      if (section === 'gallery') {
+          updateData({ ...formData, [section]: updatedList });
+          dismissToast(toastId);
+          showSuccess('Item removido e salvo com sucesso!');
+      } else {
+          dismissToast(toastId);
+          showSuccess('Item removido localmente. Clique em SALVAR para confirmar a alteração.');
+          setSaveStatus('idle'); // Garante que o botão de salvar fique visível
+      }
 
     } catch (error) {
       dismissToast(toastId);
@@ -158,10 +167,20 @@ const AdminDashboard: React.FC = () => {
   };
   
   const handleNewImageAdded = (newImage: any) => {
+    // 1. Atualiza o estado local (formData)
+    const updatedGallery = [...(formData.gallery || []), newImage];
+    
     setFormData(prev => ({
       ...prev,
-      gallery: [...(prev.gallery || []), newImage]
+      gallery: updatedGallery
     }));
+    
+    // 2. Salva imediatamente no localStorage (ChurchContext)
+    // Isso garante que a imagem persista mesmo se a página for recarregada antes do clique no botão flutuante.
+    updateData({ ...formData, gallery: updatedGallery });
+    
+    // 3. Sinaliza que o salvamento geral pode ser necessário (embora a galeria já esteja salva)
+    setSaveStatus('idle');
   };
 
   // Styles optimized for touch/mobile
