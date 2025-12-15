@@ -34,23 +34,27 @@ const Gallery: React.FC = () => {
             <p>A galeria de fotos está vazia no momento.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {data.gallery.map((image) => (
               <div 
                 key={image.id} 
-                className="relative aspect-square overflow-hidden rounded-lg cursor-pointer group shadow-lg border border-white/5"
+                className="group cursor-pointer"
                 onClick={() => handleImageClick(image.url)}
               >
-                <img 
-                  src={image.url} 
-                  alt={image.alt} 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" 
-                />
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                    <p className="text-white text-xs font-bold uppercase tracking-wider bg-black/70 backdrop-blur-sm px-2 py-1 rounded">
-                        {image.alt}
-                    </p>
+                <div className="relative aspect-square overflow-hidden rounded-lg shadow-lg border border-white/5 mb-3">
+                  <img 
+                    src={image.url} 
+                    alt={image.alt} 
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" 
+                  />
+                  {/* Overlay de hover (mantido para efeito visual) */}
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
+                
+                {/* Descrição visível abaixo da imagem */}
+                <p className="text-white text-sm font-bold line-clamp-2 group-hover:text-church-red transition-colors">
+                    {image.alt}
+                </p>
               </div>
             ))}
           </div>
