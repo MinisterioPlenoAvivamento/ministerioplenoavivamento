@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lock, Flame, LogIn, AlertTriangle } from 'lucide-react';
+import { Lock, Flame, LogIn, AlertTriangle, Eye, EyeOff } from 'lucide-react';
 import Button from '../components/Button';
 import { showSuccess, showError } from '../utils/toast';
 
-const ADMIN_PASSWORD = 'Massanaro0705@';
+const ADMIN_PASSWORD = 'Villares07oi'; // Senha atualizada
 const ADMIN_AUTH_KEY = 'admin_authenticated'; // Chave consistente
 
 const AdminLogin: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Novo estado para visibilidade
   const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent) => {
@@ -43,13 +44,21 @@ const AdminLogin: React.FC = () => {
             <div className="relative">
               <Lock size={18} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 className="w-full px-4 py-3 pl-12 rounded-xl bg-black border border-white/10 text-white focus:border-church-red focus:ring-1 focus:ring-church-red outline-none transition-all placeholder-gray-700"
                 placeholder="Digite a senha"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-white p-1 transition-colors"
+                title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
           </div>
 
